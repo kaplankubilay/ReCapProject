@@ -5,7 +5,7 @@ using Entities.Concrete;
 
 namespace DataAccess.Abstract
 {
-    public interface ICarDal
+    public interface IInMemoryCarDal
     {
         /// <summary>
         /// getAll car list

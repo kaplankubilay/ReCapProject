@@ -7,11 +7,11 @@ using Entities.Concrete;
 
 namespace DataAccess.Concrete
 {
-    public class CarDal:ICarDal
+    public class InMemoryCarDal:IInMemoryCarDal
     {
         private List<Car> _cars;
 
-        public CarDal()
+        public InMemoryCarDal()
         {
             _cars = new List<Car>
             {
