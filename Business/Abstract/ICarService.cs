@@ -7,16 +7,10 @@ namespace Business.Abstract
 {
     public interface ICarService
     {
-        /// <summary>
-        /// getAll car list
-        /// </summary>
-        /// <returns></returns>
-        List<Car> GetAll();
-
-        /// <summary>
-        /// GetById car object
-        /// </summary>
-        /// <param name="carId"></param>
-        Car GetById(int carId);
+        IList<Car> GetAll();
+        IList<Car> GetCarsByBrandId(int id);
+        IList<Car> GetCarsByColorId(int id);
+        void AddCar(Car car);
+        bool AddCarConditional(Car car);
     }
 }
