@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using DataAccess.Abstract;
 using Entities.Concrete;
 
 namespace DataAccess.Concrete
 {
-    public class InMemoryCarDal:IInMemoryCarDal
+    public class InMemoryCarDal:ICarDal
     {
         private List<Car> _cars;
 
@@ -31,6 +32,16 @@ namespace DataAccess.Concrete
             return _cars.FirstOrDefault(c => c.Id == carId);
         }
 
+
+        public IList<Car> GetAll(Expression<Func<Car, bool>> filter = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Car Get(Expression<Func<Car, bool>> filter)
+        {
+            throw new NotImplementedException();
+        }
 
         public void Add(Car car)
         {
