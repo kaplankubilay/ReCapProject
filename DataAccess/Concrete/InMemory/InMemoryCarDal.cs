@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 
 namespace DataAccess.Concrete
 {
@@ -62,6 +63,11 @@ namespace DataAccess.Concrete
         {
             Car carDelete = _cars.SingleOrDefault(c => c.Id == car.Id);
             _cars.Remove(carDelete);
+        }
+
+        public IList<CarDetailDto> GetCarDetailDtos()
+        {
+            throw new NotImplementedException();
         }
     }
 }

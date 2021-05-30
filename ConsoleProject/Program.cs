@@ -5,6 +5,7 @@ using DataAccess.Abstract;
 using DataAccess.Concrete;
 using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
+using Entities.DTOs;
 
 namespace ConsoleProject
 {
@@ -12,6 +13,13 @@ namespace ConsoleProject
     {
         static void Main(string[] args)
         {
+            CarManager carManager= new CarManager(new EfCarDal());
+            IList<CarDetailDto> carDetails= carManager.GetCarDetailDtos();
+            foreach (CarDetailDto car in carDetails)
+            {
+                Console.WriteLine("id : {0}, marka : {1}, yakıt : {2}, renk : {3}, açıklama : {4}, model : {5}",car.CarId,car.BrandName,car.FuelName,car.ColorName,car.Description,car.ModelYear);
+            }
+
             //GetAllFuels();
             //GetByIdFuel();
             //AddFuel();

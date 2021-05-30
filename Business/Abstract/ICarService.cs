@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Entities.Concrete;
+using Entities.DTOs;
 
 namespace Business.Abstract
 {
@@ -15,5 +16,11 @@ namespace Business.Abstract
         Car GetByIdCar(int id);
         void UpdateCar(Car car);
         void DeleteCar(Car car);
+
+        /// <summary>
+        /// Car detail dto nesnesi.
+        /// </summary>
+        /// <returns></returns>
+        IList<CarDetailDto> GetCarDetailDtos();
     }
 }

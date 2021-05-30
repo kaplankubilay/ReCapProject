@@ -5,6 +5,7 @@ using System.Text;
 using Business.Abstract;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 
 namespace Business.Concrete
 {
@@ -102,6 +103,11 @@ namespace Business.Concrete
             {
                 throw new Exception("Arac silinemedi..",exception);
             }
+        }
+
+        public IList<CarDetailDto> GetCarDetailDtos()
+        {
+            return _carDal.GetCarDetailDtos();
         }
     }
 }
