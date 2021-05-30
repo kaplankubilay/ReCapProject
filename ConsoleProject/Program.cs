@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Business.Concrete;
 using DataAccess.Abstract;
 using DataAccess.Concrete;
@@ -11,19 +12,70 @@ namespace ConsoleProject
     {
         static void Main(string[] args)
         {
-            
-            
+
+
+            //GetAllColors();
+            //GetByIdColor();
+            //AddColor();
+            //UpdateColor();
+            //DeleteColor();
+
             //GetAllBrands();
             //GetByIdBrand();
             //AddBrand();
             //UpdateBrand();
             //DeleteBrand();
-            
+
             //GetAllCar();
             //AddCar();
             //UpdateCar();
             //DeleteCar();
             //GetByIdCar();
+        }
+
+        private static void DeleteColor()
+        {
+            ColorManager colorManager = new ColorManager(new EfColorDal());
+            colorManager.DeleteColor(new Color
+            {
+                Id = 1002
+            });
+        }
+
+        private static void UpdateColor()
+        {
+            ColorManager colorManager = new ColorManager(new EfColorDal());
+            colorManager.UpdateColor(new Color
+            {
+                Id = 1002,
+                Name = "Lila"
+            });
+        }
+
+        private static void AddColor()
+        {
+            ColorManager colorManager = new ColorManager(new EfColorDal());
+            colorManager.AddColor(new Color
+            {
+                Name = "Mor"
+            });
+        }
+
+        private static void GetByIdColor()
+        {
+            ColorManager colorManager = new ColorManager(new EfColorDal());
+            Color color = colorManager.GetByIdColor(1);
+            Console.WriteLine("id : {0}, Name : {1}", color.Id, color.Name);
+        }
+
+        private static void GetAllColors()
+        {
+            ColorManager colorManager = new ColorManager(new EfColorDal());
+            IList<Color> getColors = colorManager.GetAllColors();
+            foreach (var color in getColors)
+            {
+                Console.WriteLine("id : {0}, Name : {1}", color.Id, color.Name);
+            }
         }
 
         private static void DeleteBrand()
