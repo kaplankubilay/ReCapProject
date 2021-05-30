@@ -12,7 +12,11 @@ namespace ConsoleProject
     {
         static void Main(string[] args)
         {
-
+            //GetAllFuels();
+            //GetByIdFuel();
+            //AddFuel();
+            //UpdateFuel();
+            //DeleteFuel();
 
             //GetAllColors();
             //GetByIdColor();
@@ -31,6 +35,51 @@ namespace ConsoleProject
             //UpdateCar();
             //DeleteCar();
             //GetByIdCar();
+        }
+
+        private static void GetByIdFuel()
+        {
+            FuelManager fuelManager = new FuelManager(new EfFuelDal());
+            Fuel getFuel = fuelManager.GetByIdFuel(2);
+            Console.WriteLine("id : {0}, Name : {1}", getFuel.Id, getFuel.Name);
+        }
+
+        private static void DeleteFuel()
+        {
+            FuelManager fuelManager = new FuelManager(new EfFuelDal());
+            fuelManager.DeleteFuel(new Fuel
+            {
+                Id = 6
+            });
+        }
+
+        private static void UpdateFuel()
+        {
+            FuelManager fuelManager = new FuelManager(new EfFuelDal());
+            fuelManager.UpdateFuel(new Fuel
+            {
+                Id = 6,
+                Name = "Dzl"
+            });
+        }
+
+        private static void AddFuel()
+        {
+            FuelManager fuelManager = new FuelManager(new EfFuelDal());
+            fuelManager.AddFuel(new Fuel
+            {
+                Name = "Benz"
+            });
+        }
+
+        private static void GetAllFuels()
+        {
+            FuelManager fuelManager = new FuelManager(new EfFuelDal());
+            IList<Fuel> fuelList = fuelManager.GetAAllFuels();
+            foreach (var fuel in fuelList)
+            {
+                Console.WriteLine("id : {0}, Name : {1}", fuel.Id, fuel.Name);
+            }
         }
 
         private static void DeleteColor()
