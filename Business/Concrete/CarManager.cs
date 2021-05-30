@@ -83,7 +83,6 @@ namespace Business.Concrete
         {
             try
             {
-                //Car updateCar = _carDal.Get(c => c.Id == car.Id);
                 _carDal.Update(car);
             }
             catch (Exception exception)

@@ -11,11 +11,64 @@ namespace ConsoleProject
     {
         static void Main(string[] args)
         {
+            
+            
+            //GetAllBrands();
+            //GetByIdBrand();
+            //AddBrand();
+            //UpdateBrand();
+            //DeleteBrand();
+            
             //GetAllCar();
             //AddCar();
             //UpdateCar();
             //DeleteCar();
             //GetByIdCar();
+        }
+
+        private static void DeleteBrand()
+        {
+            BrandManager brandManager = new BrandManager(new EfBrandDal());
+            brandManager.DeleteBrand(new Brand
+            {
+                Id = 1002
+            });
+        }
+
+        private static void UpdateBrand()
+        {
+            BrandManager brandManager = new BrandManager(new EfBrandDal());
+            brandManager.UpdateBrand(new Brand
+            {
+                Id = 1002,
+                Name = "Ford2"
+            });
+        }
+
+        private static void AddBrand()
+        {
+            BrandManager brandManager = new BrandManager(new EfBrandDal());
+            brandManager.AddBrand(new Brand
+            {
+                Name = "Ford"
+            });
+        }
+
+        private static void GetByIdBrand()
+        {
+            BrandManager brandManager = new BrandManager(new EfBrandDal());
+            Brand getBrand = brandManager.GetByIdBrand(1);
+            Console.WriteLine("id : {0}, name : {1}", getBrand.Id, getBrand.Name);
+        }
+
+        private static void GetAllBrands()
+        {
+            BrandManager brandManager = new BrandManager(new EfBrandDal());
+
+            foreach (var brand in brandManager.GetAllBrands())
+            {
+                Console.WriteLine("id : {0}, name : {1}", brand.Id, brand.Name);
+            }
         }
 
         private static void GetByIdCar()
