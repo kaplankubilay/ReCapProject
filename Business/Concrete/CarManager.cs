@@ -41,23 +41,67 @@ namespace Business.Concrete
                     _carDal.Add(car);
                 }
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                Console.WriteLine(e);
-                throw;
+                throw new Exception("Arac eklenemedi",exception);
+            }
+        }
+
+        public Car GetByIdCar(int id)
+        {
+            try
+            {
+                return _carDal.Get(c => c.Id == id);
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Id bazli arac getirilemedi.",exception);
             }
         }
 
         public bool AddCarConditional(Car car)
         {
-            if (car.DailyPrice > 0 && car.Description.Length >= 2)
+            try
             {
-                return true;
+                if (car.DailyPrice > 0 && car.Description.Length >= 2)
+                {
+                    return true;
+                }
+                else
+                {
+                    Console.WriteLine("Günlük ücret 0 dan büyük ve Açıklama en az 2 karakter olmalıdır.");
+                    return false;
+                }
             }
-            else
+            catch (Exception exception)
             {
-                Console.WriteLine("Günlük ücret 0 dan büyük ve Açıklama en az 2 karakter olmalıdır.");
-                return false;
+                throw  new Exception("Kontrol metodunda hata var.",exception);
+            }
+        }
+
+        public void UpdateCar(Car car)
+        {
+            try
+            {
+                //Car updateCar = _carDal.Get(c => c.Id == car.Id);
+                _carDal.Update(car);
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Arac guncelleme yapilamadi.",exception);
+            }
+        }
+
+        public void DeleteCar(Car car)
+        {
+            try
+            {
+                Car deleteCar = _carDal.Get(c => c.Id == car.Id);
+                _carDal.Delete(deleteCar);
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Arac silinemedi..",exception);
             }
         }
     }

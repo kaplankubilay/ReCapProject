@@ -10,7 +10,10 @@ namespace Business.Abstract
         IList<Car> GetAll();
         IList<Car> GetCarsByBrandId(int id);
         IList<Car> GetCarsByColorId(int id);
-        void AddCar(Car car);
         bool AddCarConditional(Car car);
+        void AddCar(Car car);
+        Car GetByIdCar(int id);
+        void UpdateCar(Car car);
+        void DeleteCar(Car car);
     }
 }
