@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 
@@ -17,16 +19,18 @@ namespace Business.Concrete
         }
 
 
-        public IList<Brand> GetAllBrands()
+        public IDataResult<IList<Brand>> GetAllBrands()
         {
-            return _brandDal.GetAll();
+            IList<Brand> getListBrand = _brandDal.GetAll();
+            return new SuccessDataResult<IList<Brand>>(getListBrand); 
         }
 
-        public Brand GetByIdBrand(int id)
+        public IDataResult<Brand> GetByIdBrand(int id)
         {
             try
             {
-                return _brandDal.Get(b => b.Id == id);
+                Brand getBrand = _brandDal.Get(b => b.Id == id);
+                return new SuccessDataResult<Brand>(getBrand);
             }
             catch (Exception exception)
             {
@@ -34,11 +38,18 @@ namespace Business.Concrete
             }
         }
 
-        public void UpdateBrand(Brand brand)
+        public IResult UpdateBrand(Brand brand)
         {
             try
             {
+                if (brand.Name.Length < 2)
+                {
+                    return new ErrorResult(Messages.FaultEntry);
+                }
+
                 _brandDal.Update(brand);
+                return new Result(true,Messages.BrandUpdate);
+
             }
             catch (Exception exception)
             {
@@ -46,11 +57,12 @@ namespace Business.Concrete
             }
         }
 
-        public void AddBrand(Brand brand)
+        public IResult AddBrand(Brand brand)
         {
             try
             {
                 _brandDal.Add(brand);
+                return new Result(true,Messages.BrandAdded); 
             }
             catch (Exception exception)
             {
@@ -58,12 +70,13 @@ namespace Business.Concrete
             }
         }
 
-        public void DeleteBrand(Brand brand)
+        public IResult DeleteBrand(Brand brand)
         {
             try
             {
                 Brand deleteBrand = _brandDal.Get(b => b.Id == brand.Id);
                 _brandDal.Delete(deleteBrand);
+                return new Result(true,Messages.BrandDeleted);
             }
             catch (Exception exception)
             {
