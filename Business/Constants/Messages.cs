@@ -11,5 +11,8 @@ namespace Business.Constants
         public static string FaultEntry = "Hatali giris.";
         public static string BrandUpdate = "Marka guncellendi.";
         public static string BrandDeleted = "Marka silindi.";
+        public static string CarAdded = "Araç eklendi";
+        public static string CarUpdated = "Araç güncellendi.";
+        public static string CarDeleted = "Araç silindi.";
     }
 }

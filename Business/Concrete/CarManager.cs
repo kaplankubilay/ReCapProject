@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
@@ -18,22 +20,24 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
-        public IList<Car> GetAll()
+        public IDataResult<IList<Car>> GetAll()
         {
-            return _carDal.GetAll();
+            return new SuccessDataResult<IList<Car>>(_carDal.GetAll());
         }
 
-        public IList<Car> GetCarsByBrandId(int id)
+        public IDataResult<IList<Car>> GetCarsByBrandId(int id)
         {
-            return _carDal.GetAll(b => b.BrandId == id).ToList();
+            IList<Car> getCars = _carDal.GetAll(b => b.BrandId == id).ToList();
+            return new SuccessDataResult<IList<Car>>(getCars);
         }
 
-        public IList<Car> GetCarsByColorId(int id)
+        public IDataResult<IList<Car>> GetCarsByColorId(int id)
         {
-            return _carDal.GetAll(c => c.ColorId == id).ToList();
+            IList<Car> getCars= _carDal.GetAll(c => c.ColorId == id).ToList();
+            return new SuccessDataResult<IList<Car>>(getCars);
         }
 
-        public void AddCar(Car car)
+        public IResult AddCar(Car car)
         {
             try
             {
@@ -41,6 +45,7 @@ namespace Business.Concrete
                 {
                     _carDal.Add(car);
                 }
+                return new Result(true,Messages.CarAdded);
             }
             catch (Exception exception)
             {
@@ -48,11 +53,12 @@ namespace Business.Concrete
             }
         }
 
-        public Car GetByIdCar(int id)
+        public IDataResult<Car> GetByIdCar(int id)
         {
             try
             {
-                return _carDal.Get(c => c.Id == id);
+                Car getCar = _carDal.Get(c => c.Id == id);
+                return new DataResult<Car>(getCar,true);
             }
             catch (Exception exception)
             {
@@ -80,11 +86,12 @@ namespace Business.Concrete
             }
         }
 
-        public void UpdateCar(Car car)
+        public IResult UpdateCar(Car car)
         {
             try
             {
                 _carDal.Update(car);
+                return new Result(true,Messages.CarUpdated);
             }
             catch (Exception exception)
             {
@@ -92,12 +99,13 @@ namespace Business.Concrete
             }
         }
 
-        public void DeleteCar(Car car)
+        public IResult DeleteCar(Car car)
         {
             try
             {
                 Car deleteCar = _carDal.Get(c => c.Id == car.Id);
                 _carDal.Delete(deleteCar);
+                return new Result(true,Messages.CarDeleted);
             }
             catch (Exception exception)
             {
@@ -105,9 +113,9 @@ namespace Business.Concrete
             }
         }
 
-        public IList<CarDetailDto> GetCarDetailDtos()
+        public IDataResult<IList<CarDetailDto>> GetCarDetailDtos()
         {
-            return _carDal.GetCarDetailDtos();
+            return new SuccessDataResult<IList<CarDetailDto>>(_carDal.GetCarDetailDtos()); 
         }
     }
 }

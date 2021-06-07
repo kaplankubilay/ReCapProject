@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Business.Concrete;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Concrete;
 using DataAccess.Concrete.EntityFramework;
@@ -13,12 +14,7 @@ namespace ConsoleProject
     {
         static void Main(string[] args)
         {
-            CarManager carManager= new CarManager(new EfCarDal());
-            IList<CarDetailDto> carDetails= carManager.GetCarDetailDtos();
-            foreach (CarDetailDto car in carDetails)
-            {
-                Console.WriteLine("id : {0}, marka : {1}, yakıt : {2}, renk : {3}, açıklama : {4}, model : {5}",car.CarId,car.BrandName,car.FuelName,car.ColorName,car.Description,car.ModelYear);
-            }
+            //CarDetailDto();
 
             //GetAllFuels();
             //GetByIdFuel();
@@ -43,6 +39,17 @@ namespace ConsoleProject
             //UpdateCar();
             //DeleteCar();
             //GetByIdCar();
+        }
+
+        private static void CarDetailDto()
+        {
+            CarManager carManager = new CarManager(new EfCarDal());
+            IDataResult<IList<CarDetailDto>> carDetails = carManager.GetCarDetailDtos();
+            foreach (CarDetailDto car in carDetails.Data)
+            {
+                Console.WriteLine("id : {0}, marka : {1}, yakıt : {2}, renk : {3}, açıklama : {4}, model : {5}", car.CarId,
+                    car.BrandName, car.FuelName, car.ColorName, car.Description, car.ModelYear);
+            }
         }
 
         private static void GetByIdFuel()
@@ -166,15 +173,15 @@ namespace ConsoleProject
         private static void GetByIdBrand()
         {
             BrandManager brandManager = new BrandManager(new EfBrandDal());
-            Brand getBrand = brandManager.GetByIdBrand(1);
-            Console.WriteLine("id : {0}, name : {1}", getBrand.Id, getBrand.Name);
+            IDataResult<Brand> getBrand = brandManager.GetByIdBrand(1);
+            Console.WriteLine("id : {0}, name : {1}", getBrand.Data.Id, getBrand.Data.Name);
         }
 
         private static void GetAllBrands()
         {
             BrandManager brandManager = new BrandManager(new EfBrandDal());
 
-            foreach (var brand in brandManager.GetAllBrands())
+            foreach (var brand in brandManager.GetAllBrands().Data)
             {
                 Console.WriteLine("id : {0}, name : {1}", brand.Id, brand.Name);
             }
@@ -183,9 +190,9 @@ namespace ConsoleProject
         private static void GetByIdCar()
         {
             CarManager carManager = new CarManager(new EfCarDal());
-            Car getCar = carManager.GetByIdCar(1);
-            Console.WriteLine("id :{0},marka :{1}, renk :{2}, açıklama :{3}, model :{4}, günlük :{5}", getCar.Id,
-                getCar.BrandId, getCar.ColorId, getCar.Description, getCar.ModelYear, getCar.DailyPrice);
+            IDataResult<Car> getCar = carManager.GetByIdCar(1);
+            Console.WriteLine("id :{0},marka :{1}, renk :{2}, açıklama :{3}, model :{4}, günlük :{5}", getCar.Data.Id,
+                getCar.Data.BrandId, getCar.Data.ColorId, getCar.Data.Description, getCar.Data.ModelYear, getCar.Data.DailyPrice);
         }
 
         private static void DeleteCar()
@@ -230,7 +237,7 @@ namespace ConsoleProject
         {
             CarManager carManager = new CarManager(new EfCarDal());
 
-            foreach (var car in carManager.GetAll())
+            foreach (var car in carManager.GetAll().Data)
             {
                 Console.WriteLine("id :{0},marka :{1}, renk :{2}, açıklama :{3}, model :{4}, günlük :{5}",car.Id,car.BrandId,car.ColorId,car.Description,car.ModelYear,car.DailyPrice);
             }
