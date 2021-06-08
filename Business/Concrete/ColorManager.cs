@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 
@@ -16,16 +18,17 @@ namespace Business.Concrete
             _colorDal = colorDal;
         }
 
-        public IList<Color> GetAllColors()
+        public IDataResult<IList<Color>> GetAllColors()
         {
-            return _colorDal.GetAll();
+            return new SuccessDataResult<IList<Color>>(_colorDal.GetAll()); 
         }
 
-        public Color GetByIdColor(int id)
+        public IDataResult<Color> GetByIdColor(int id)
         {
             try
             {
-                return _colorDal.Get(c => c.Id == id);
+                Color getColor = _colorDal.Get(c => c.Id == id);
+                return new SuccessDataResult<Color>(getColor);
             }
             catch (Exception exception)
             {
@@ -33,11 +36,12 @@ namespace Business.Concrete
             }
         }
 
-        public void UpdateColor(Color color)
+        public IResult UpdateColor(Color color)
         {
             try
             {
                 _colorDal.Update(color);
+                return new Result(true,Messages.ColorUpdate); 
             }
             catch (Exception exception)
             {
@@ -45,11 +49,12 @@ namespace Business.Concrete
             }
         }
 
-        public void AddColor(Color color)
+        public IResult AddColor(Color color)
         {
             try
             {
                 _colorDal.Add(color);
+                return new Result(true,Messages.ColorAdded);
             }
             catch (Exception exception)
             {
@@ -57,12 +62,13 @@ namespace Business.Concrete
             }
         }
 
-        public void DeleteColor(Color color)
+        public IResult DeleteColor(Color color)
         {
             try
             {
                 Color deleteColor = _colorDal.Get(c => c.Id == color.Id);
                 _colorDal.Delete(deleteColor);
+                return new Result(true,Messages.ColorDeleted);
             }
             catch (Exception exception)
             {

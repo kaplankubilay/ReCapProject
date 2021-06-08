@@ -128,14 +128,14 @@ namespace ConsoleProject
         private static void GetByIdColor()
         {
             ColorManager colorManager = new ColorManager(new EfColorDal());
-            Color color = colorManager.GetByIdColor(1);
+            Color color = colorManager.GetByIdColor(1).Data;
             Console.WriteLine("id : {0}, Name : {1}", color.Id, color.Name);
         }
 
         private static void GetAllColors()
         {
             ColorManager colorManager = new ColorManager(new EfColorDal());
-            IList<Color> getColors = colorManager.GetAllColors();
+            IList<Color> getColors = colorManager.GetAllColors().Data;
             foreach (var color in getColors)
             {
                 Console.WriteLine("id : {0}, Name : {1}", color.Id, color.Name);

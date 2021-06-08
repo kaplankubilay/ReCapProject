@@ -14,5 +14,8 @@ namespace Business.Constants
         public static string CarAdded = "Araç eklendi";
         public static string CarUpdated = "Araç güncellendi.";
         public static string CarDeleted = "Araç silindi.";
+        public static string ColorUpdate = "Renk güncellendi.";
+        public static string ColorAdded = "Renk eklendi.";
+        public static string ColorDeleted = "Renk silindi";
     }
 }
