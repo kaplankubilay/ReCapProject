@@ -20,5 +20,10 @@ namespace Business.Constants
         public static string FuelAdded = "Yakıt tipi eklendi.";
         public static string FuelUpdated = "Yakıt tipi güncellendi.";
         public static string FuelDeleted = "Yakıt tipi silindi.";
+        public static string CustomerUpdated = "Müsteri güncellendi.";
+        public static string CustomerAdded = "Müşteri eklendi.";
+        public static string CustomerDeleted = "Müşteri silindi.";
+
+        public static string Error = "Hata";
     }
 }
