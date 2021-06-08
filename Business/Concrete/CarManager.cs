@@ -49,7 +49,7 @@ namespace Business.Concrete
             }
             catch (Exception exception)
             {
-                throw new Exception("Arac eklenemedi",exception);
+                throw new Exception(Messages.Error, exception);
             }
         }
 
@@ -62,7 +62,7 @@ namespace Business.Concrete
             }
             catch (Exception exception)
             {
-                throw new Exception("Id bazli arac getirilemedi.",exception);
+                throw new Exception(Messages.Error, exception);
             }
         }
 
@@ -82,7 +82,7 @@ namespace Business.Concrete
             }
             catch (Exception exception)
             {
-                throw  new Exception("Kontrol metodunda hata var.",exception);
+                throw  new Exception(Messages.Error, exception);
             }
         }
 
@@ -95,7 +95,7 @@ namespace Business.Concrete
             }
             catch (Exception exception)
             {
-                throw new Exception("Arac guncelleme yapilamadi.",exception);
+                throw new Exception(Messages.Error, exception);
             }
         }
 
@@ -109,7 +109,7 @@ namespace Business.Concrete
             }
             catch (Exception exception)
             {
-                throw new Exception("Arac silinemedi..",exception);
+                throw new Exception(Messages.Error, exception);
             }
         }
 

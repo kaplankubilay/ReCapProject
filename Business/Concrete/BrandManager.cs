@@ -34,7 +34,7 @@ namespace Business.Concrete
             }
             catch (Exception exception)
             {
-                throw new Exception("GetByIdBrand calismadi.",exception);
+                throw new Exception(Messages.Error,exception);
             }
         }
 
@@ -53,7 +53,7 @@ namespace Business.Concrete
             }
             catch (Exception exception)
             {
-                throw new Exception("UpdateBrand calismadi.",exception);
+                throw new Exception(Messages.Error, exception);
             }
         }
 
@@ -66,7 +66,7 @@ namespace Business.Concrete
             }
             catch (Exception exception)
             {
-                throw new Exception("AddBrand calismadi.", exception);
+                throw new Exception(Messages.Error, exception);
             }
         }
 
@@ -80,7 +80,7 @@ namespace Business.Concrete
             }
             catch (Exception exception)
             {
-                throw new Exception("DeleteBrand calismadi.", exception);
+                throw new Exception(Messages.Error, exception);
             }
         }
     }

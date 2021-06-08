@@ -34,7 +34,7 @@ namespace Business.Concrete
             }
             catch (Exception exception)
             {
-                throw new Exception("GetByIdCustomer calismadi.",exception);
+                throw new Exception(Messages.Error, exception);
             }
         }
 
@@ -47,7 +47,7 @@ namespace Business.Concrete
             }
             catch (Exception exception)
             {
-                throw new Exception("",exception);
+                throw new Exception(Messages.Error, exception);
             }
         }
 
@@ -60,7 +60,7 @@ namespace Business.Concrete
             }
             catch (Exception exception)
             {
-                throw new Exception("", exception);
+                throw new Exception(Messages.Error, exception);
             }
         }
 
@@ -74,7 +74,7 @@ namespace Business.Concrete
             }
             catch (Exception exception)
             {
-                throw new Exception("", exception);
+                throw new Exception(Messages.Error, exception);
             }
         }
     }

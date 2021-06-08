@@ -32,7 +32,7 @@ namespace Business.Concrete
             }
             catch (Exception exception)
             {
-                throw new Exception("GetByIdColor calismadi.",exception);
+                throw new Exception(Messages.Error, exception);
             }
         }
 
@@ -45,7 +45,7 @@ namespace Business.Concrete
             }
             catch (Exception exception)
             {
-                throw new Exception("UpdateColor calismadi.", exception);
+                throw new Exception(Messages.Error, exception);
             }
         }
 
@@ -58,7 +58,7 @@ namespace Business.Concrete
             }
             catch (Exception exception)
             {
-                throw new Exception("AddColor calismadi.", exception);
+                throw new Exception(Messages.Error, exception);
             }
         }
 
@@ -72,7 +72,7 @@ namespace Business.Concrete
             }
             catch (Exception exception)
             {
-                throw new Exception("DeleteColor calismadi.", exception);
+                throw new Exception(Messages.Error, exception);
             }
         }
     }

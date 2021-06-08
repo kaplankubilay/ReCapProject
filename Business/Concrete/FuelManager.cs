@@ -32,7 +32,7 @@ namespace Business.Concrete
             }
             catch (Exception exception)
             {
-                throw new Exception("GetBtIdFuel calismadi.",exception);
+                throw new Exception(Messages.Error, exception);
             }
         }
 
@@ -45,7 +45,7 @@ namespace Business.Concrete
             }
             catch (Exception exception)
             {
-                throw new Exception("AddFuel calismadi.", exception);
+                throw new Exception(Messages.Error, exception);
             }
         }
 
@@ -58,7 +58,7 @@ namespace Business.Concrete
             }
             catch (Exception exception)
             {
-                throw new Exception("UpdateFuel calismadi.", exception);
+                throw new Exception(Messages.Error, exception);
             }
         }
 
@@ -72,7 +72,7 @@ namespace Business.Concrete
             }
             catch (Exception exception)
             {
-                throw new Exception("DeleteFuel calismadi.", exception);
+                throw new Exception(Messages.Error, exception);
             }
         }
     }
