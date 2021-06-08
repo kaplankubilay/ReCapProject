@@ -25,5 +25,6 @@ namespace Business.Constants
         public static string CustomerDeleted = "Müşteri silindi.";
 
         public static string Error = "Hata";
+        public static string Success = "İşlem başarılı.";
     }
 }
