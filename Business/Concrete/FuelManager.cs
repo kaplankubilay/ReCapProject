@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 
@@ -16,16 +18,17 @@ namespace Business.Concrete
             _fuelDal = fuelDal;
         }
 
-        public IList<Fuel> GetAAllFuels()
+        public IDataResult<IList<Fuel>> GetAAllFuels()
         {
-            return _fuelDal.GetAll();
+            return new SuccessDataResult<IList<Fuel>>(_fuelDal.GetAll());
         }
 
-        public Fuel GetByIdFuel(int id)
+        public IDataResult<Fuel> GetByIdFuel(int id)
         {
             try
             {
-                return _fuelDal.Get(f => f.Id == id);
+                Fuel getFuel = _fuelDal.Get(f => f.Id == id);
+                return new SuccessDataResult<Fuel>(getFuel);
             }
             catch (Exception exception)
             {
@@ -33,11 +36,12 @@ namespace Business.Concrete
             }
         }
 
-        public void AddFuel(Fuel fuel)
+        public IResult AddFuel(Fuel fuel)
         {
             try
             {
                 _fuelDal.Add(fuel);
+                return new Result(true,Messages.FuelAdded);
             }
             catch (Exception exception)
             {
@@ -45,11 +49,12 @@ namespace Business.Concrete
             }
         }
 
-        public void UpdateFuel(Fuel fuel)
+        public IResult UpdateFuel(Fuel fuel)
         {
             try
             {
                 _fuelDal.Update(fuel);
+                return new Result(true,Messages.FuelUpdated);
             }
             catch (Exception exception)
             {
@@ -57,12 +62,13 @@ namespace Business.Concrete
             }
         }
 
-        public void DeleteFuel(Fuel fuel)
+        public IResult DeleteFuel(Fuel fuel)
         {
             try
             {
                 Fuel deleteFuel = _fuelDal.Get(f => f.Id == fuel.Id);
                 _fuelDal.Delete(deleteFuel);
+                return new Result(true,Messages.FuelDeleted);
             }
             catch (Exception exception)
             {

@@ -55,7 +55,7 @@ namespace ConsoleProject
         private static void GetByIdFuel()
         {
             FuelManager fuelManager = new FuelManager(new EfFuelDal());
-            Fuel getFuel = fuelManager.GetByIdFuel(2);
+            Fuel getFuel = fuelManager.GetByIdFuel(2).Data;
             Console.WriteLine("id : {0}, Name : {1}", getFuel.Id, getFuel.Name);
         }
 
@@ -90,7 +90,7 @@ namespace ConsoleProject
         private static void GetAllFuels()
         {
             FuelManager fuelManager = new FuelManager(new EfFuelDal());
-            IList<Fuel> fuelList = fuelManager.GetAAllFuels();
+            IList<Fuel> fuelList = fuelManager.GetAAllFuels().Data;
             foreach (var fuel in fuelList)
             {
                 Console.WriteLine("id : {0}, Name : {1}", fuel.Id, fuel.Name);

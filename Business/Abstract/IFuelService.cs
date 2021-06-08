@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Core.Utilities.Results;
 using Entities.Concrete;
 
 namespace Business.Abstract
 {
     public interface IFuelService
     {
-        IList<Fuel> GetAAllFuels();
-        Fuel GetByIdFuel(int Id);
-        void AddFuel(Fuel fuel);
-        void UpdateFuel(Fuel fuel);
-        void DeleteFuel(Fuel fuel);
+        IDataResult<IList<Fuel>> GetAAllFuels();
+        IDataResult<Fuel> GetByIdFuel(int Id);
+        IResult AddFuel(Fuel fuel);
+        IResult UpdateFuel(Fuel fuel);
+        IResult DeleteFuel(Fuel fuel);
     }
 }

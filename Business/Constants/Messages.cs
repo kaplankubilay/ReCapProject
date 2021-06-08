@@ -17,5 +17,8 @@ namespace Business.Constants
         public static string ColorUpdate = "Renk güncellendi.";
         public static string ColorAdded = "Renk eklendi.";
         public static string ColorDeleted = "Renk silindi";
+        public static string FuelAdded = "Yakıt tipi eklendi.";
+        public static string FuelUpdated = "Yakıt tipi güncellendi.";
+        public static string FuelDeleted = "Yakıt tipi silindi.";
     }
 }
