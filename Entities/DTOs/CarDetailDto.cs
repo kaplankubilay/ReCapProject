@@ -12,6 +12,6 @@ namespace Entities.DTOs
         public string FuelName { get; set; }
         public string ColorName { get; set; }
         public string Description { get; set; }
-        public int ModelYear { get; set; }
+        public int? ModelYear { get; set; }
     }
 }

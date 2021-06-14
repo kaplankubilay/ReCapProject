@@ -67,6 +67,7 @@ namespace Business.Concrete
             try
             {
                 User deletedUser = _userDal.Get(u => u.Id == user.Id);
+                _userDal.Delete(deletedUser);
                 return new Result(true, Messages.Success);
             }
             catch (Exception exception)

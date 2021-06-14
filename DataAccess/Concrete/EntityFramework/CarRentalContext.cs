@@ -17,7 +17,7 @@ namespace DataAccess.Concrete.EntityFramework
         /// <param name="optionsBuilder"></param>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=CarRentalDb;Trusted_Connection=true");
+            optionsBuilder.UseSqlServer(@"Server=(LocalDB)\MSSQLLocalDB;Database=CarRentalDb;Trusted_Connection=true");
         }
 
         //Added Db tables

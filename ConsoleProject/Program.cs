@@ -14,6 +14,8 @@ namespace ConsoleProject
     {
         static void Main(string[] args)
         {
+            //AddRental();
+
             //CarDetailDto();
 
             //GetAllFuels();
@@ -39,6 +41,17 @@ namespace ConsoleProject
             //UpdateCar();
             //DeleteCar();
             //GetByIdCar();
+        }
+
+        private static void AddRental()
+        {
+            RentalManager rentalManager = new RentalManager(new EfRentalDal());
+            rentalManager.AddRental(new Rental
+            {
+                CarId = 3,
+                CustomerId = 2,
+                RentDate = DateTime.Now
+            });
         }
 
         private static void CarDetailDto()
