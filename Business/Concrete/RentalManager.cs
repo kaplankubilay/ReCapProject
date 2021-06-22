@@ -6,6 +6,7 @@ using Business.Constants;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 
 namespace Business.Concrete
 {
@@ -37,6 +38,19 @@ namespace Business.Concrete
             {
                 Rental getRental = _rentalDal.Get(x => x.Id == rentalId);
                 return new SuccessDataResult<Rental>(getRental);
+            }
+            catch (Exception exception)
+            {
+                throw new Exception(Messages.Error, exception);
+            }
+        }
+
+        public IDataResult<IList<RentalDetailDto>> GetRentalDetailDto()
+        {
+            try
+            {
+                IList<RentalDetailDto> getRentalDetails = _rentalDal.GetRentalDetailDtos();
+                return new SuccessDataResult<IList<RentalDetailDto>>(getRentalDetails);
             }
             catch (Exception exception)
             {
