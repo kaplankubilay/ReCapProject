@@ -30,27 +30,7 @@ namespace WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            //Manager içinde veri tutulmuyorsa singleton yapýlabilir aksi halde örn tüm sepetler ayný olur. Data db de tutuluyorsa yine singleton yapýlabilir.
-            services.AddSingleton<IBrandService,BrandManager>();
-            services.AddSingleton<IBrandDal,EfBrandDal>();
-
-            services.AddSingleton<ICarService,CarManager>();
-            services.AddSingleton<ICarDal,EfCarDal>();
-
-            services.AddSingleton<IColorService,ColorManager>();
-            services.AddSingleton<IColorDal,EfColorDal>();
-
-            services.AddSingleton<ICustomerService,CustomerManager>();
-            services.AddSingleton<ICustomerDal,EfCustomerDal>();
-
-            services.AddSingleton<IFuelService,FuelManager>();
-            services.AddSingleton<IFuelDal,EfFuelDal>();
-
-            services.AddSingleton<IRentalService,RentalManager>();
-            services.AddSingleton<IRentalDal,EfRentalDal>();
-
-            services.AddSingleton<IUserService,UserManager>();
-            services.AddSingleton<IUserDal,EfUserDal>();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
