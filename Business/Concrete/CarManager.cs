@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.CrossCuttingConcerns.ValidationTool;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -41,10 +43,12 @@ namespace Business.Concrete
         {
             try
             {
-                if (AddCarConditional(car))
-                {
-                    _carDal.Add(car);
-                }
+                //if (AddCarConditional(car))
+                //{
+                //    _carDal.Add(car);
+                //}
+                ValidationTool.Validate(new CarValidator(),car);
+                _carDal.Add(car);
                 return new Result(true,Messages.CarAdded);
             }
             catch (Exception exception)
@@ -66,25 +70,25 @@ namespace Business.Concrete
             }
         }
 
-        public bool AddCarConditional(Car car)
-        {
-            try
-            {
-                if (car.DailyPrice > 0 && car.Description.Length >= 2)
-                {
-                    return true;
-                }
-                else
-                {
-                    Console.WriteLine("Günlük ücret 0 dan büyük ve Açıklama en az 2 karakter olmalıdır.");
-                    return false;
-                }
-            }
-            catch (Exception exception)
-            {
-                throw  new Exception(Messages.Error, exception);
-            }
-        }
+        //public bool AddCarConditional(Car car)
+        //{
+        //    try
+        //    {
+        //        if (car.DailyPrice > 0 && car.Description.Length >= 2)
+        //        {
+        //            return true;
+        //        }
+        //        else
+        //        {
+        //            Console.WriteLine("Günlük ücret 0 dan büyük ve Açıklama en az 2 karakter olmalıdır.");
+        //            return false;
+        //        }
+        //    }
+        //    catch (Exception exception)
+        //    {
+        //        throw  new Exception(Messages.Error, exception);
+        //    }
+        //}
 
         public IResult UpdateCar(Car car)
         {
