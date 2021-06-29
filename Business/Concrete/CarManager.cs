@@ -45,10 +45,6 @@ namespace Business.Concrete
         {
             try
             {
-                //if (AddCarConditional(car))
-                //{
-                //    _carDal.Add(car);
-                //}
                 ValidationTool.Validate(new CarValidator(),car);
                 _carDal.Add(car);
                 return new Result(true,Messages.CarAdded);
@@ -71,26 +67,6 @@ namespace Business.Concrete
                 throw new Exception(Messages.Error, exception);
             }
         }
-
-        //public bool AddCarConditional(Car car)
-        //{
-        //    try
-        //    {
-        //        if (car.DailyPrice > 0 && car.Description.Length >= 2)
-        //        {
-        //            return true;
-        //        }
-        //        else
-        //        {
-        //            Console.WriteLine("Günlük ücret 0 dan büyük ve Açıklama en az 2 karakter olmalıdır.");
-        //            return false;
-        //        }
-        //    }
-        //    catch (Exception exception)
-        //    {
-        //        throw  new Exception(Messages.Error, exception);
-        //    }
-        //}
 
         public IResult UpdateCar(Car car)
         {

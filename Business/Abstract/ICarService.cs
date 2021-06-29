@@ -12,7 +12,6 @@ namespace Business.Abstract
         IDataResult<IList<Car>> GetAll();
         IDataResult<IList<Car>> GetCarsByBrandId(int id);
         IDataResult<IList<Car>> GetCarsByColorId(int id);
-        //bool AddCarConditional(Car car);
         IResult AddCar(Car car);
         IDataResult<Car> GetByIdCar(int id);
         IResult UpdateCar(Car car);
