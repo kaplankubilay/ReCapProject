@@ -28,5 +28,6 @@ namespace Business.Constants
 
         public static string Error = "Hata";
         public static string Success = "İşlem başarılı.";
+        public static string AlreadyAxistPropertyName = "Eklenmeye çalışılan isim zaten mevcut.";
     }
 }

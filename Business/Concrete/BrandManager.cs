@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Text;
 using Business.Abstract;
 using Business.Constants;
+using Core.Utilities.Business.BusinessTools;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Business.Concrete
 {
@@ -61,6 +63,13 @@ namespace Business.Concrete
         {
             try
             {
+                IResult result = BusinessMotor.Run(AlreadyExistBrandName(brand));
+
+                if (result != null)
+                {
+                    return result;
+                }
+
                 _brandDal.Add(brand);
                 return new Result(true,Messages.BrandAdded); 
             }
@@ -82,6 +91,16 @@ namespace Business.Concrete
             {
                 throw new Exception(Messages.Error, exception);
             }
+        }
+
+        private IResult AlreadyExistBrandName(Brand brand)
+        {
+            bool result = _brandDal.GetAll(x => x.Name == brand.Name).Any();
+            if (result)
+            {
+                return new ErrorResult(Messages.AlreadyAxistPropertyName);
+            }
+            return new SuccessResult();
         }
     }
 }
