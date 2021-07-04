@@ -16,7 +16,7 @@ namespace Business.DependencyReselvers.Autofac
     {
         /// <summary>
         /// Manager içinde veri tutulmuyorsa singleton yapılabilir aksi halde örn tüm sepetler aynı olur. Data db de tutuluyorsa yine singleton yapılabilir.
-        /// 
+        /// Program daha ilk kez ayağa kalkarken Autofac bu nesnelerin instance ını bir kez alır. Ve böylece uygulamanın hızlı çalışmasına da katkı sağlar.
         /// </summary>
         /// <param name="builder"></param>
         protected override void Load(ContainerBuilder builder)
