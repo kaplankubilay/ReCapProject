@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Business.Abstract;
 using Business.Constants;
+using Core.Utilities.Business.BusinessTools;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -40,6 +42,12 @@ namespace Business.Concrete
         {
             try
             {
+                var result = BusinessMotor.Run(AlreadyExistName(user), NameLenghtControl(user));
+                if (result != null)
+                {
+                    return result;
+                }
+                
                 _userDal.Add(user);
                 return new Result(true, Messages.Success);
             }
@@ -74,6 +82,28 @@ namespace Business.Concrete
             {
                 throw new Exception(Messages.Error, exception);
             }
+        }
+
+        private IResult NameLenghtControl(User user)
+        {
+            var userName = user.FirstName.Length;
+            var userLastname = user.LastName.Length;
+            if (userName <2 || userLastname<2)
+            {
+                return new ErrorResult(Messages.NameLenghtControl);
+            }
+
+            return new SuccessResult();
+        }
+
+        private IResult AlreadyExistName(User user)
+        {
+            bool result = _userDal.GetAll(x => x.LastName == user.LastName || x.FirstName == user.FirstName).Any();
+            if (result)
+            {
+                return new ErrorResult(Messages.AlreadyAxistPropertyName);
+            }
+            return new SuccessResult();
         }
     }
 }
