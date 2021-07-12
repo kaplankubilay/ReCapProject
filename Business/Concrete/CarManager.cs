@@ -113,7 +113,7 @@ namespace Business.Concrete
             int result = car.Description.Length;
             if (result<1)
             {
-                return new ErrorResult(Messages.DescriptionLenghtMinControl);
+                return new ErrorResult(Messages.LenghtMinControl);
             }
 
             return new SuccessResult();

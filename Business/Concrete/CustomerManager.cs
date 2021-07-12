@@ -4,9 +4,11 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using Business.Abstract;
 using Business.Constants;
+using Core.Utilities.Business.BusinessTools;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Business.Concrete
 {
@@ -55,6 +57,13 @@ namespace Business.Concrete
         {
             try
             {
+                var result = BusinessMotor.Run(CompanyNameLenghtControl(customer), AlreadyExistCompanyName(customer));
+                
+                if (result != null)
+                {
+                    return result;
+                }
+
                 _customerDal.Add(customer);
                 return new Result(true,Messages.CustomerAdded);
             }
@@ -76,6 +85,26 @@ namespace Business.Concrete
             {
                 throw new Exception(Messages.Error, exception);
             }
+        }
+
+        private IResult AlreadyExistCompanyName(Customer customer)
+        {
+            bool result = _customerDal.GetAll(x => x.CompanyName == customer.CompanyName).Any();
+            if (result)
+            {
+                return new ErrorResult(Messages.AlreadyAxistPropertyName);
+            }
+            return new SuccessResult();
+        }
+
+        private IResult CompanyNameLenghtControl(Customer customer)
+        {
+            var result = customer.CompanyName.Length;
+            if (result <2)
+            {
+                return new ErrorResult(Messages.LenghtMinControl);
+            }
+            return new SuccessResult();
         }
     }
 }
