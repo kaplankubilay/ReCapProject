@@ -30,5 +30,6 @@ namespace Business.Constants
         public static string Success = "İşlem başarılı.";
         public static string AlreadyAxistPropertyName = "Eklenmeye çalışılan isim zaten mevcut.";
         public static string DescriptionLenghtMinControl = "Eklemeye çalıştığınız açıklama en az 2 karakter olmalı."
+        public static string NameLenghtControl = "İsim 2 karakterdeN az olamaz";
     }
 }

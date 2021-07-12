@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Text;
 using Business.Abstract;
 using Business.Constants;
+using Core.Utilities.Business.BusinessTools;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Business.Concrete
 {
@@ -53,6 +55,11 @@ namespace Business.Concrete
         {
             try
             {
+                var result = BusinessMotor.Run(AlreadyExistColorControl(color), ColorNameLengthControl(color));
+                if (result != null)
+                {
+                    return result;
+                }
                 _colorDal.Add(color);
                 return new Result(true,Messages.ColorAdded);
             }
@@ -75,5 +82,25 @@ namespace Business.Concrete
                 throw new Exception(Messages.Error, exception);
             }
         }
+
+        private IResult ColorNameLengthControl(Color color)
+        {
+            int lenght = color.Name.Length;
+            if (lenght<2)
+            {
+                return new ErrorResult(Messages.NameLenghtControl);
+            }
+            return new SuccessResult();
+        }
+
+        private IResult AlreadyExistColorControl(Color color)
+        {
+            bool result = _colorDal.GetAll(x => x.Name == color.Name).Any();
+            if (result)
+            {
+                return new ErrorResult(Messages.AlreadyAxistPropertyName);
+            }
+            return new SuccessResult();
+        } 
     }
 }
