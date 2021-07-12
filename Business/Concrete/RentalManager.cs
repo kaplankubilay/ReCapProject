@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Business.Abstract;
 using Business.Constants;
+using Core.Utilities.Business.BusinessTools;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -62,12 +63,14 @@ namespace Business.Concrete
         {
             try
             {
-                if (AddRentalControl(rental))
+                var result = BusinessMotor.Run(AddRentalControl(rental));
+                if (result != null)
                 {
-                    _rentalDal.Add(rental);
-                    return new Result(true, Messages.Success);
+                    return result;
                 }
-                return new ErrorResult(Messages.RentalControlMessage);
+
+                _rentalDal.Add(rental);
+                return new Result(true, Messages.Success);
             }
             catch (Exception exception)
             {
@@ -102,7 +105,7 @@ namespace Business.Concrete
             }
         }
 
-        public bool AddRentalControl(Rental rental)
+        public IResult AddRentalControl(Rental rental)
         {
             IList<Rental> rentals = _rentalDal.GetAll();
 
@@ -110,11 +113,11 @@ namespace Business.Concrete
             {
                 if (rent.CarId == rental.CarId && rent.ReturnDate == null)
                 {
-                    return false;
+                    return new ErrorResult(Messages.CarNotReturnYet);
                 }
             }
 
-            return true;
+            return new SuccessResult();
         }
     }
 }
