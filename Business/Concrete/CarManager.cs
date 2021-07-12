@@ -7,6 +7,7 @@ using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.ValidationTool;
+using Core.Utilities.Business.BusinessTools;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -45,7 +46,14 @@ namespace Business.Concrete
         {
             try
             {
+                IResult result = BusinessMotor.Run(DescriptionLenghtMinConrtrol(car));
+                if (result != null)
+                {
+                    return result;
+                }
+
                 ValidationTool.Validate(new CarValidator(),car);
+                
                 _carDal.Add(car);
                 return new Result(true,Messages.CarAdded);
             }
@@ -99,5 +107,17 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<IList<CarDetailDto>>(_carDal.GetCarDetailDtos()); 
         }
+
+        private IResult DescriptionLenghtMinConrtrol(Car car)
+        {
+            int result = car.Description.Length;
+            if (result<1)
+            {
+                return new ErrorResult(Messages.DescriptionLenghtMinControl);
+            }
+
+            return new SuccessResult();
+        }
+        
     }
 }
