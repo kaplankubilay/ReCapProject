@@ -88,7 +88,8 @@ namespace Business.Concrete
         {
             var userName = user.FirstName.Length;
             var userLastname = user.LastName.Length;
-            if (userName <2 || userLastname<2)
+            var email = user.Email.Length;
+            if (userName <2 || userLastname<2 ||email<2)
             {
                 return new ErrorResult(Messages.NameLenghtControl);
             }
@@ -98,7 +99,7 @@ namespace Business.Concrete
 
         private IResult AlreadyExistName(User user)
         {
-            bool result = _userDal.GetAll(x => x.LastName == user.LastName || x.FirstName == user.FirstName).Any();
+            bool result = _userDal.GetAll(x => x.LastName == user.LastName && x.FirstName == user.FirstName && x.Email == user.Email).Any();
             if (result)
             {
                 return new ErrorResult(Messages.AlreadyAxistPropertyName);
