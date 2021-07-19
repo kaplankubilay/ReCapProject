@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Business.Abstract;
+using Core.Utilities.Helpers;
 using Entities.Concrete;
 
 namespace WebAPI.Controllers
@@ -45,9 +46,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("updatecarimage")]
-        public IActionResult UpdateCarImage(CarImage carImage)
+        public IActionResult UpdateCarImage([FromForm(Name = ("Image"))] IFormFile file,CarImage carImage)
         {
-            var result = _carImageService.UpdateCarImage(carImage);
+            var result = _carImageService.UpdateCarImage(file,carImage);
             if (result.Success)
             {
                 return Ok(result);
@@ -57,9 +58,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("addcarimage")]
-        public IActionResult AddCarImage(CarImage carImage)
+        public IActionResult AddCarImage([FromForm(Name = ("Image"))] IFormFile file,CarImage carImage)
         {
-            var result = _carImageService.AddCarImage(carImage);
+            var result = _carImageService.AddCarImage(file,carImage);
             if (result.Success)
             {
                 return Ok(result);

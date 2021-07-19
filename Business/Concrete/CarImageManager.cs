@@ -1,18 +1,21 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Business.Abstract;
 using Business.Constants;
 using Core.Utilities.Business.BusinessTools;
+using Core.Utilities.Helpers;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Business.Concrete
 {
-    public class CarImageManager:ICarImageService
+    public class CarImageManager : ICarImageService
     {
         private ICarImageDal _carImageDal;
         public CarImageManager(ICarImageDal carImageDal)
@@ -25,11 +28,12 @@ namespace Business.Concrete
             try
             {
                 IList<CarImage> getListCarImages = _carImageDal.GetAll();
+
                 return new SuccessDataResult<IList<CarImage>>(getListCarImages);
             }
             catch (Exception exception)
             {
-                throw new Exception(Messages.Error,exception);
+                throw new Exception(Messages.Error, exception);
             }
         }
 
@@ -38,7 +42,10 @@ namespace Business.Concrete
             try
             {
                 CarImage car = _carImageDal.Get(x => x.CarId == carId);
-                return new SuccessDataResult<CarImage>(car);
+
+                CarImage imageResult = CarImageNullControl(car);
+
+                return new SuccessDataResult<CarImage>(imageResult);
             }
             catch (Exception exception)
             {
@@ -46,27 +53,21 @@ namespace Business.Concrete
             }
         }
 
-        public IResult AddCarImage(CarImage carImage)
+        public IResult AddCarImage(IFormFile file, CarImage carImage)
         {
             try
             {
                 IResult result = BusinessMotor.Run(ImageCountControl(carImage));
-
-                CarImage isNullImage = CarImageNullControl(carImage);
 
                 if (result != null)
                 {
                     return result;
                 }
 
-                if (isNullImage==null)
-                {
-                    carImage.ImagePath = isNullImage.ImagePath;
-                }
-
-                carImage.Date=DateTime.Now;
+                carImage.ImagePath = FileHelper.Add(file);
+                carImage.Date = DateTime.Now;
                 _carImageDal.Add(carImage);
-                return new Result(true,Messages.Success);
+                return new Result(true, Messages.Success);
             }
             catch (Exception exception)
             {
@@ -74,12 +75,20 @@ namespace Business.Concrete
             }
         }
 
-        public IResult UpdateCarImage(CarImage carImage)
+        public IResult UpdateCarImage(IFormFile file,CarImage carImage)
         {
             try
             {
+                IResult result = BusinessMotor.Run(ImageCountControl(carImage));
+
+                if (result != null)
+                {
+                    return result;
+                }
+
+                carImage.ImagePath = FileHelper.Update(_carImageDal.Get(c => c.Id == carImage.Id).ImagePath, file);
                 _carImageDal.Update(carImage);
-                return new Result(true,Messages.Success);
+                return new Result(true, Messages.Success);
             }
             catch (Exception exception)
             {
@@ -92,8 +101,9 @@ namespace Business.Concrete
             try
             {
                 CarImage getImage = _carImageDal.Get(x => x.Id == carImage.Id);
+                FileHelper.Delete(getImage.ImagePath);
                 _carImageDal.Delete(getImage);
-                return new Result(true,Messages.Success);
+                return new Result(true, Messages.Success);
             }
             catch (Exception exception)
             {
@@ -104,7 +114,7 @@ namespace Business.Concrete
         private IResult ImageCountControl(CarImage carImage)
         {
             int count = _carImageDal.GetAll(x => x.CarId == carImage.CarId).Count;
-            if (count>5)
+            if (count > 5)
             {
                 return new ErrorResult(Messages.Error);
             }
@@ -115,21 +125,22 @@ namespace Business.Concrete
         {
             try
             {
-                bool control = _carImageDal.GetAll(x => x.CarId == carImage.CarId).Any();
-                if (!control)
+                if (carImage.ImagePath == null)
                 {
-                    CarImage image = new CarImage
+                    carImage = new CarImage
                     {
-                        ImagePath = carImage.ImagePath
+                        Id = carImage.Id,
+                        CarId = carImage.CarId,
+                        ImagePath = Environment.CurrentDirectory + @"\Images\DefaultImage.png",
+                        Date = DateTime.Now
                     };
-                    return image;
                 }
-
-                return null;
+                
+                return carImage;
             }
             catch (Exception exception)
             {
-                throw new Exception(Messages.Error,exception);
+                throw new Exception(Messages.Error, exception);
             }
         }
     }
