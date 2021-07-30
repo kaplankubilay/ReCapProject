@@ -34,5 +34,11 @@ namespace Business.Constants
         public static string CarNotReturnYet = "Araç henüz dönmedi.";
 
         public static string AuthorizationDenied = "Gecersiz kullanıcı.";
+        public static string UserRegistered = "Kullanıcı kaydedildi.";
+        public static string UserNotFound = "Kullanıcı bulunamadı.";
+        public static string PasswordError = "Parola Hatası.";
+        public static string SuccessfulLogin = "Giriş başarılı.";
+        public static string UserAlreadyExists = "Kullanıcı zaten var";
+        public static string AccessTokenCreated = "Token oluşturuldu.";
     }
 }

@@ -85,6 +85,24 @@ namespace Business.Concrete
             }
         }
 
+        public IDataResult<IList<OperationClaim>> GetClaims(User user)
+        {
+            return new SuccessDataResult<IList<OperationClaim>>(_userDal.GetClaims(user));
+        }
+
+        public IDataResult<User> GetByMail(string email)
+        {
+            try
+            {
+                User getUser = _userDal.Get(x => x.Email == email);
+                return new SuccessDataResult<User>(getUser);
+            }
+            catch (Exception exception)
+            {
+                throw new Exception(Messages.Error,exception);
+            }
+        }
+
         private IResult NameLenghtControl(User user)
         {
             var userName = user.FirstName.Length;
