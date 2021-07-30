@@ -95,7 +95,12 @@ namespace Business.Concrete
             try
             {
                 User getUser = _userDal.Get(x => x.Email == email);
-                return new SuccessDataResult<User>(getUser);
+                if (getUser != null)
+                { 
+                    return new SuccessDataResult<User>(getUser);
+                }
+
+                return null;
             }
             catch (Exception exception)
             {
