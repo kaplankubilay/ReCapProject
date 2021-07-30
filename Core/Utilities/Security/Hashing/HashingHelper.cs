@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Text;
 
-namespace Core.Utilities.Hashing
+namespace Core.Utilities.Security.Hashing
 {
     public class HashingHelper
     {

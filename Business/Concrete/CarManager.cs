@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Business.Abstract;
+using Business.BusinessAspect.AutoFac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
@@ -41,6 +42,7 @@ namespace Business.Concrete
             return new SuccessDataResult<IList<Car>>(getCars);
         }
 
+        [SecuredOperation("Car.add")]
         [ValidationAspect(typeof(CarValidator))]
         public IResult AddCar(Car car)
         {

@@ -32,5 +32,7 @@ namespace Business.Constants
         public static string LenghtMinControl = "En az 2 karakter olmalı.";
         public static string NameLenghtControl = "İsim 2 karakterdeN az olamaz";
         public static string CarNotReturnYet = "Araç henüz dönmedi.";
+
+        public static string AuthorizationDenied = "Gecersiz kullanıcı.";
     }
 }
