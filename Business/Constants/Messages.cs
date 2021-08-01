@@ -33,7 +33,7 @@ namespace Business.Constants
         public static string NameLenghtControl = "İsim 2 karakterdeN az olamaz";
         public static string CarNotReturnYet = "Araç henüz dönmedi.";
 
-        public static string AuthorizationDenied = "Gecersiz kullanıcı.";
+        public static string AuthorizationDenied = "Yetkisiz kullanıcı.";
         public static string UserRegistered = "Kullanıcı kaydedildi.";
         public static string UserNotFound = "Kullanıcı bulunamadı.";
         public static string PasswordError = "Parola Hatası.";

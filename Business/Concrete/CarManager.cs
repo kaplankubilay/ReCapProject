@@ -42,7 +42,7 @@ namespace Business.Concrete
             return new SuccessDataResult<IList<Car>>(getCars);
         }
 
-        [SecuredOperation("Car.add")]
+        [SecuredOperation("add.car,admin")]
         [ValidationAspect(typeof(CarValidator))]
         public IResult AddCar(Car car)
         {
