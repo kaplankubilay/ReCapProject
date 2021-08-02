@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using Core.CrossCuttingConcerns.Caching;
 using Core.CrossCuttingConcerns.Caching.Microsoft;
@@ -22,6 +23,9 @@ namespace Core.DependencyResolvers
             services.AddMemoryCache();
 
             services.AddSingleton<ICacheManager, MemoryCacheManager>();
+
+            //kronometre için instance oluşturur.
+            services.AddSingleton<Stopwatch>();
         }
     }
 }

@@ -7,6 +7,7 @@ using Business.BusinessAspect.AutoFac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Performancs;
 using Core.Aspects.Autofac.Transection;
 using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.ValidationTool;
@@ -70,6 +71,7 @@ namespace Business.Concrete
         }
 
         [CacheAspect]
+        [PerformanceAspect(5)]
         public IDataResult<Car> GetByIdCar(int id)
         {
             try
