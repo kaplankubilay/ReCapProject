@@ -6,6 +6,7 @@ using Business.Abstract;
 using Business.BusinessAspect.AutoFac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.ValidationTool;
 using Core.Utilities.Business.BusinessTools;
@@ -45,6 +46,7 @@ namespace Business.Concrete
 
         [SecuredOperation("add.car,admin")]
         [ValidationAspect(typeof(CarValidator))]
+        [CacheRemoveAspect("ICarService.Get")]
         public IResult AddCar(Car car)
         {
             try
@@ -66,6 +68,7 @@ namespace Business.Concrete
             }
         }
 
+        [CacheAspect]
         public IDataResult<Car> GetByIdCar(int id)
         {
             try
@@ -79,6 +82,7 @@ namespace Business.Concrete
             }
         }
 
+        [CacheRemoveAspect("ICarService.Get")]
         public IResult UpdateCar(Car car)
         {
             try
