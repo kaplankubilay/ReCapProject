@@ -38,7 +38,7 @@ namespace WebAPI.Controllers
             var result = _carService.GetByIdCar(carId);
             if (result.Success)
             {
-                return Ok(result.Success);
+                return Ok(result.Data);
             }
 
             return BadRequest(result);
