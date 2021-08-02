@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Business.BusinessTools;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -40,18 +42,13 @@ namespace Business.Concrete
             }
         }
 
+        [ValidationAspect(typeof(BrandAddValidator))]
         public IResult UpdateBrand(Brand brand)
         {
             try
             {
-                if (brand.Name.Length < 2)
-                {
-                    return new ErrorResult(Messages.FaultEntry);
-                }
-
                 _brandDal.Update(brand);
                 return new Result(true,Messages.BrandUpdate);
-
             }
             catch (Exception exception)
             {
@@ -59,6 +56,7 @@ namespace Business.Concrete
             }
         }
 
+        [ValidationAspect(typeof(BrandAddValidator))]
         public IResult AddBrand(Brand brand)
         {
             try

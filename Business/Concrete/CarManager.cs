@@ -59,7 +59,7 @@ namespace Business.Concrete
                     return result;
                 }
 
-                ValidationTool.Validate(new CarValidator(),car);
+                //ValidationTool.Validate(new CarValidator(),car);
                 
                 _carDal.Add(car);
                 return new Result(true,Messages.CarAdded);
