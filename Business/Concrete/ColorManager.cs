@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Business.BusinessTools;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -38,6 +40,7 @@ namespace Business.Concrete
             }
         }
 
+        [ValidationAspect(typeof(ColorValidator))]
         public IResult UpdateColor(Color color)
         {
             try
@@ -51,11 +54,12 @@ namespace Business.Concrete
             }
         }
 
+        [ValidationAspect(typeof(ColorValidator))]
         public IResult AddColor(Color color)
         {
             try
             {
-                var result = BusinessMotor.Run(AlreadyExistColorControl(color), ColorNameLengthControl(color));
+                var result = BusinessMotor.Run(AlreadyExistColorControl(color));
                 if (result != null)
                 {
                     return result;
@@ -81,16 +85,6 @@ namespace Business.Concrete
             {
                 throw new Exception(Messages.Error, exception);
             }
-        }
-
-        private IResult ColorNameLengthControl(Color color)
-        {
-            int lenght = color.Name.Length;
-            if (lenght<2)
-            {
-                return new ErrorResult(Messages.NameLenghtControl);
-            }
-            return new SuccessResult();
         }
 
         private IResult AlreadyExistColorControl(Color color)

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Business.BusinessTools;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -59,6 +61,7 @@ namespace Business.Concrete
             }
         }
 
+        [ValidationAspect(typeof(RentalValidator))]
         public IResult AddRental(Rental rental)
         {
             try
@@ -78,6 +81,7 @@ namespace Business.Concrete
             }
         }
 
+        [ValidationAspect(typeof(RentalValidator))]
         public IResult UpdateRental(Rental rental)
         {
             try

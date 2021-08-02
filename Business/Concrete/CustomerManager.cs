@@ -4,6 +4,8 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Business.BusinessTools;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -40,6 +42,7 @@ namespace Business.Concrete
             }
         }
 
+        [ValidationAspect(typeof(CustomerValidator))]
         public IResult UpdateCustomer(Customer customer)
         {
             try
@@ -53,6 +56,7 @@ namespace Business.Concrete
             }
         }
 
+        [ValidationAspect(typeof(CustomerValidator))]
         public IResult AddCustomer(Customer customer)
         {
             try

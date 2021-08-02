@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Business.BusinessTools;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -38,11 +40,12 @@ namespace Business.Concrete
             }
         }
 
+        [ValidationAspect(typeof(FuelValidator))]
         public IResult AddFuel(Fuel fuel)
         {
             try
             {
-                var result = BusinessMotor.Run(FuelNameLenghtControl(fuel), AlreadyExistFuelName(fuel));
+                var result = BusinessMotor.Run( AlreadyExistFuelName(fuel));
                 if (result != null)
                 {
                     return result;
@@ -57,6 +60,7 @@ namespace Business.Concrete
             }
         }
 
+        [ValidationAspect(typeof(FuelValidator))]
         public IResult UpdateFuel(Fuel fuel)
         {
             try
@@ -90,16 +94,6 @@ namespace Business.Concrete
             if (result)
             {
                 return new ErrorResult(Messages.AlreadyAxistPropertyName);
-            }
-            return new SuccessResult();
-        }
-
-        private IResult FuelNameLenghtControl(Fuel fuel)
-        {
-            int result = fuel.Name.Length;
-            if (result < 2)
-            {
-                return new ErrorResult(Messages.NameLenghtControl);
             }
             return new SuccessResult();
         }

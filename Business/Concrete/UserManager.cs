@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Entities.Concrete;
 using Core.Utilities.Business.BusinessTools;
 using Core.Utilities.Results;
@@ -39,11 +41,12 @@ namespace Business.Concrete
             }
         }
 
+        [ValidationAspect(typeof(UserValidator))]
         public IResult AddUser(User user)
         {
             try
             {
-                var result = BusinessMotor.Run(AlreadyExistName(user), NameLenghtControl(user));
+                var result = BusinessMotor.Run(AlreadyExistName(user));
                 if (result != null)
                 {
                     return result;
@@ -58,6 +61,7 @@ namespace Business.Concrete
             }
         }
 
+        [ValidationAspect(typeof(UserValidator))]
         public IResult UpdateUser(User user)
         {
             try
@@ -107,20 +111,7 @@ namespace Business.Concrete
                 throw new Exception(Messages.Error,exception);
             }
         }
-
-        private IResult NameLenghtControl(User user)
-        {
-            var userName = user.FirstName.Length;
-            var userLastname = user.LastName.Length;
-            var email = user.Email.Length;
-            if (userName <2 || userLastname<2 ||email<2)
-            {
-                return new ErrorResult(Messages.NameLenghtControl);
-            }
-
-            return new SuccessResult();
-        }
-
+        
         private IResult AlreadyExistName(User user)
         {
             bool result = _userDal.GetAll(x => x.LastName == user.LastName && x.FirstName == user.FirstName && x.Email == user.Email).Any();
