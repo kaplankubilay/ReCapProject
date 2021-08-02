@@ -99,6 +99,7 @@ namespace Business.Concrete
             }
         }
 
+        [CacheRemoveAspect("ICarService.Get")]
         public IResult DeleteCar(Car car)
         {
             try
@@ -113,6 +114,7 @@ namespace Business.Concrete
             }
         }
 
+        [CacheAspect]
         public IDataResult<IList<CarDetailDto>> GetCarDetailDtos()
         {
             return new SuccessDataResult<IList<CarDetailDto>>(_carDal.GetCarDetailDtos()); 

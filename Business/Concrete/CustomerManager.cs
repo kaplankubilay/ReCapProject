@@ -5,6 +5,7 @@ using System.Text;
 using Business.Abstract;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Business.BusinessTools;
 using Core.Utilities.Results;
@@ -23,6 +24,7 @@ namespace Business.Concrete
             _customerDal = customerDal;
         }
 
+        [CacheAspect]
         public IDataResult<IList<Customer>> GetAllCustomers()
         {
             IList<Customer> getCustomers = _customerDal.GetAll();
@@ -43,6 +45,7 @@ namespace Business.Concrete
         }
 
         [ValidationAspect(typeof(CustomerValidator))]
+        [CacheRemoveAspect("ICustomerService.Get")]
         public IResult UpdateCustomer(Customer customer)
         {
             try
@@ -57,6 +60,7 @@ namespace Business.Concrete
         }
 
         [ValidationAspect(typeof(CustomerValidator))]
+        [CacheRemoveAspect("ICustomerService.Get")]
         public IResult AddCustomer(Customer customer)
         {
             try
@@ -77,6 +81,7 @@ namespace Business.Concrete
             }
         }
 
+        [CacheRemoveAspect("ICustomerService.Get")]
         public IResult DeleteCustomer(Customer customer)
         {
             try

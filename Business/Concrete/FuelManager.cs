@@ -5,6 +5,7 @@ using System.Text;
 using Business.Abstract;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Business.BusinessTools;
 using Core.Utilities.Results;
@@ -22,6 +23,7 @@ namespace Business.Concrete
             _fuelDal = fuelDal;
         }
 
+        [CacheAspect]
         public IDataResult<IList<Fuel>> GetAAllFuels()
         {
             return new SuccessDataResult<IList<Fuel>>(_fuelDal.GetAll());
@@ -41,6 +43,7 @@ namespace Business.Concrete
         }
 
         [ValidationAspect(typeof(FuelValidator))]
+        [CacheRemoveAspect("IFuelService.Get")]
         public IResult AddFuel(Fuel fuel)
         {
             try
@@ -61,6 +64,7 @@ namespace Business.Concrete
         }
 
         [ValidationAspect(typeof(FuelValidator))]
+        [CacheRemoveAspect("IFuelService.Get")]
         public IResult UpdateFuel(Fuel fuel)
         {
             try
@@ -74,6 +78,7 @@ namespace Business.Concrete
             }
         }
 
+        [CacheRemoveAspect("IFuelService.Get")]
         public IResult DeleteFuel(Fuel fuel)
         {
             try

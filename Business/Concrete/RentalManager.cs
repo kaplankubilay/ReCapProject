@@ -4,6 +4,7 @@ using System.Text;
 using Business.Abstract;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Business.BusinessTools;
 using Core.Utilities.Results;
@@ -22,6 +23,7 @@ namespace Business.Concrete
             _rentalDal = rentalDal;
         }
 
+        [CacheAspect]
         public IDataResult<IList<Rental>> GetAllRentals()
         {
             try
@@ -48,6 +50,7 @@ namespace Business.Concrete
             }
         }
 
+        [CacheAspect]
         public IDataResult<IList<RentalDetailDto>> GetRentalDetailDto()
         {
             try
@@ -62,6 +65,7 @@ namespace Business.Concrete
         }
 
         [ValidationAspect(typeof(RentalValidator))]
+        [CacheRemoveAspect("IRentalService.Get")]
         public IResult AddRental(Rental rental)
         {
             try
@@ -82,6 +86,7 @@ namespace Business.Concrete
         }
 
         [ValidationAspect(typeof(RentalValidator))]
+        [CacheRemoveAspect("IRentalService.Get")]
         public IResult UpdateRental(Rental rental)
         {
             try
@@ -95,6 +100,7 @@ namespace Business.Concrete
             }
         }
 
+        [CacheRemoveAspect("IRentalService.Get")]
         public IResult DeleteRental(Rental rental)
         {
             try

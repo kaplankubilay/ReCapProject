@@ -4,6 +4,7 @@ using System.Text;
 using Business.Abstract;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Business.BusinessTools;
 using Core.Utilities.Results;
@@ -22,7 +23,7 @@ namespace Business.Concrete
             _brandDal = brandDal;
         }
 
-
+        [CacheAspect]
         public IDataResult<IList<Brand>> GetAllBrands()
         {
             IList<Brand> getListBrand = _brandDal.GetAll();
@@ -43,6 +44,7 @@ namespace Business.Concrete
         }
 
         [ValidationAspect(typeof(BrandValidator))]
+        [CacheRemoveAspect("IBrandService.Get")]
         public IResult UpdateBrand(Brand brand)
         {
             try
@@ -57,6 +59,7 @@ namespace Business.Concrete
         }
 
         [ValidationAspect(typeof(BrandValidator))]
+        [CacheRemoveAspect("IBrandService.Get")]
         public IResult AddBrand(Brand brand)
         {
             try
@@ -77,6 +80,7 @@ namespace Business.Concrete
             }
         }
 
+        [CacheRemoveAspect("IBrandService.Get")]
         public IResult DeleteBrand(Brand brand)
         {
             try

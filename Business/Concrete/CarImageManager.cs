@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using Business.Abstract;
 using Business.Constants;
+using Core.Aspects.Autofac.Caching;
 using Core.Utilities.Business.BusinessTools;
 using Core.Utilities.Helpers;
 using Core.Utilities.Results;
@@ -23,6 +24,7 @@ namespace Business.Concrete
             _carImageDal = carImageDal;
         }
 
+        [CacheAspect]
         public IDataResult<IList<CarImage>> GetAllCarImages()
         {
             try
@@ -37,6 +39,7 @@ namespace Business.Concrete
             }
         }
 
+        [CacheAspect]
         public IDataResult<CarImage> GetByCarId(int carId)
         {
             try
@@ -53,6 +56,7 @@ namespace Business.Concrete
             }
         }
 
+        [CacheRemoveAspect("ICarImageService.Get")]
         public IResult AddCarImage(IFormFile file, CarImage carImage)
         {
             try
@@ -75,6 +79,7 @@ namespace Business.Concrete
             }
         }
 
+        [CacheRemoveAspect("ICarImageService.Get")]
         public IResult UpdateCarImage(IFormFile file,CarImage carImage)
         {
             try
@@ -96,6 +101,7 @@ namespace Business.Concrete
             }
         }
 
+        [CacheRemoveAspect("ICarImageService.Get")]
         public IResult DeleteCarImage(CarImage carImage)
         {
             try
