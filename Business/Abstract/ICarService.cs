@@ -22,5 +22,12 @@ namespace Business.Abstract
         /// </summary>
         /// <returns></returns>
         IDataResult<IList<CarDetailDto>> GetCarDetailDtos();
+        
+        /// <summary>
+        /// Trasection örneği oluşturmak için kullanılan metot. 
+        /// </summary>
+        /// <param name="car"></param>
+        /// <returns></returns>
+        IResult AddTransactionalTest(Car car);
     }
 }

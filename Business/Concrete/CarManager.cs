@@ -7,6 +7,7 @@ using Business.BusinessAspect.AutoFac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Transection;
 using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.ValidationTool;
 using Core.Utilities.Business.BusinessTools;
@@ -113,6 +114,19 @@ namespace Business.Concrete
         public IDataResult<IList<CarDetailDto>> GetCarDetailDtos()
         {
             return new SuccessDataResult<IList<CarDetailDto>>(_carDal.GetCarDetailDtos()); 
+        }
+
+        [TransactionScopeAspect]
+        public IResult AddTransactionalTest(Car car)
+        {
+            AddCar(car);
+            if (car.DailyPrice < 10)
+            {
+                throw new Exception("");
+            }
+
+            AddCar(car);
+            return null;
         }
 
         private IResult DescriptionLenghtMinConrtrol(Car car)
