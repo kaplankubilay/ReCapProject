@@ -42,7 +42,7 @@ namespace Business.Concrete
             }
         }
 
-        [ValidationAspect(typeof(BrandAddValidator))]
+        [ValidationAspect(typeof(BrandValidator))]
         public IResult UpdateBrand(Brand brand)
         {
             try
@@ -56,7 +56,7 @@ namespace Business.Concrete
             }
         }
 
-        [ValidationAspect(typeof(BrandAddValidator))]
+        [ValidationAspect(typeof(BrandValidator))]
         public IResult AddBrand(Brand brand)
         {
             try
