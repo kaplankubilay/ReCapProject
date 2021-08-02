@@ -25,6 +25,7 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
+        [CacheAspect] //key=cache ismi Value=değeri.
         public IDataResult<IList<Car>> GetAll()
         {
             return new SuccessDataResult<IList<Car>>(_carDal.GetAll());
