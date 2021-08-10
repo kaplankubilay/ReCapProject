@@ -26,6 +26,7 @@ namespace DataAccess.Concrete.EntityFramework
                                  CarId = car.Id,
                                  BrandName = brand.Name,
                                  ModelName = brand.ModelName,
+                                 Plate = car.Plate,
                                  CustomerName = customer.CompanyName,
                                  UserFirstName = user.FirstName,
                                  UserLastName = user.LastName,
