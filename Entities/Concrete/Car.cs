@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Core.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Entities.Concrete
 {
@@ -14,5 +15,6 @@ namespace Entities.Concrete
         public int? ModelYear { get; set; }
         public decimal? DailyPrice { get; set; }
         public string Description { get; set; }
+        public string Plate { get; set; }
     }
 }

@@ -13,5 +13,6 @@ namespace Entities.DTOs
         public string ColorName { get; set; }
         public string Description { get; set; }
         public int? ModelYear { get; set; }
+        public string Plate { get; set; }
     }
 }

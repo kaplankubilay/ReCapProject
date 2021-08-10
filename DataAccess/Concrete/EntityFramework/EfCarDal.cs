@@ -28,7 +28,8 @@ namespace DataAccess.Concrete.EntityFramework
                         ColorName = color.Name,
                         Description = car.Description,
                         FuelName = fuel.Name,
-                        ModelYear = car.ModelYear
+                        ModelYear = car.ModelYear,
+                        Plate = car.Plate
                     };
                 return result.ToList();
             }
