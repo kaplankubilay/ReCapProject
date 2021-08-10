@@ -26,7 +26,7 @@ namespace WebAPI.Controllers
             var resunt = _brandService.GetAllBrands();
             if (resunt.Success)
             {
-                return Ok(resunt.Data);
+                return Ok(resunt);
             }
 
             return BadRequest(resunt);
@@ -38,7 +38,7 @@ namespace WebAPI.Controllers
             var result = _brandService.GetByIdBrand(brandId);
             if (result.Success)
             {
-                return Ok(result.Data);
+                return Ok(result);
             }
 
             return BadRequest(result);

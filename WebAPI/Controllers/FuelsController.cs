@@ -26,7 +26,7 @@ namespace WebAPI.Controllers
             var result = _fuelService.GetAAllFuels();
             if (result.Success)
             {
-                return Ok(result.Data);
+                return Ok(result);
             }
 
             return BadRequest(result);
@@ -38,7 +38,7 @@ namespace WebAPI.Controllers
             var result = _fuelService.GetByIdFuel(fuelId);
             if (result.Success)
             {
-                return Ok(result.Data);
+                return Ok(result);
             }
 
             return BadRequest(result);

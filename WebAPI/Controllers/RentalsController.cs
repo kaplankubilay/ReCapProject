@@ -26,7 +26,7 @@ namespace WebAPI.Controllers
             var result = _rentalService.GetAllRentals();
             if (result.Success)
             {
-                return Ok(result.Data);
+                return Ok(result);
             }
 
             return BadRequest(result);
@@ -38,7 +38,7 @@ namespace WebAPI.Controllers
             var result = _rentalService.GetByRentalId(rentalId);
             if (result.Success)
             {
-                return Ok(result.Data);
+                return Ok(result);
             }
 
             return BadRequest(result);
@@ -50,7 +50,7 @@ namespace WebAPI.Controllers
             var result = _rentalService.GetRentalDetailDto();
             if (result.Success)
             {
-                return Ok(result.Data);
+                return Ok(result);
             }
 
             return BadRequest(result);

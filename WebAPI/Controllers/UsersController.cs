@@ -27,7 +27,7 @@ namespace WebAPI.Controllers
             var result = _userService.GetAllUsers();
             if (result.Success)
             {
-                return Ok(result.Data);
+                return Ok(result);
             }
 
             return BadRequest(result);
@@ -39,7 +39,7 @@ namespace WebAPI.Controllers
             var result = _userService.GetByIdUser(userId);
             if (result.Success)
             {
-                return Ok(result.Data);
+                return Ok(result);
             }
 
             return BadRequest(result);

@@ -26,7 +26,7 @@ namespace WebAPI.Controllers
             var result = _carService.GetAll();
             if (result.Success)
             {
-                return Ok(result.Data);
+                return Ok(result);
             }
 
             return BadRequest(result);
@@ -38,7 +38,7 @@ namespace WebAPI.Controllers
             var result = _carService.GetByIdCar(carId);
             if (result.Success)
             {
-                return Ok(result.Data);
+                return Ok(result);
             }
 
             return BadRequest(result);
@@ -86,7 +86,7 @@ namespace WebAPI.Controllers
             var result = _carService.GetCarsByBrandId(brandId);
             if (result.Success)
             {
-                return Ok(result.Data);
+                return Ok(result);
             }
 
             return BadRequest(result);
@@ -98,7 +98,7 @@ namespace WebAPI.Controllers
             var result = _carService.GetCarsByColorId(colorId);
             if (result.Success)
             {
-                return Ok(result.Data);
+                return Ok(result);
             }
 
             return BadRequest(result);
@@ -110,7 +110,7 @@ namespace WebAPI.Controllers
             var result = _carService.GetCarDetailDtos();
             if (result.Success)
             {
-                return Ok(result.Data);
+                return Ok(result);
             }
 
             return BadRequest(result);

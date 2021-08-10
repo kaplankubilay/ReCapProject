@@ -27,7 +27,7 @@ namespace WebAPI.Controllers
             var result = _carImageService.GetAllCarImages();
             if (result.Success)
             {
-                return Ok(result.Data);
+                return Ok(result);
             }
 
             return BadRequest(result);
@@ -39,7 +39,7 @@ namespace WebAPI.Controllers
             var result = _carImageService.GetByCarId(carId);
             if (result.Success)
             {
-                return Ok(result.Data);
+                return Ok(result);
             }
 
             return BadRequest(result);
