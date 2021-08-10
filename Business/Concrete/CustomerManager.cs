@@ -11,6 +11,7 @@ using Core.Utilities.Business.BusinessTools;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Business.Concrete
@@ -95,7 +96,7 @@ namespace Business.Concrete
                 throw new Exception(Messages.Error, exception);
             }
         }
-
+        
         private IResult AlreadyExistCompanyName(Customer customer)
         {
             bool result = _customerDal.GetAll(x => x.CompanyName == customer.CompanyName).Any();
@@ -114,6 +115,13 @@ namespace Business.Concrete
                 return new ErrorResult(Messages.LenghtMinControl);
             }
             return new SuccessResult();
+        }
+
+        [CacheAspect]
+        public IDataResult<IList<CustomerDetailDto>> GetCustomerDetailDtos()
+        {
+            IList<CustomerDetailDto> result = _customerDal.GetCustomerDetailDtos();
+            return new SuccessDataResult<IList<CustomerDetailDto>>(result);
         }
     }
 }
