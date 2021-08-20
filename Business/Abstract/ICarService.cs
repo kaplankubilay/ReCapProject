@@ -10,8 +10,6 @@ namespace Business.Abstract
     public interface ICarService
     {
         IDataResult<IList<Car>> GetAll();
-        IDataResult<IList<Car>> GetCarsByBrandId(int id);
-        IDataResult<IList<Car>> GetCarsByColorId(int id);
         IResult AddCar(Car car);
         IDataResult<Car> GetByIdCar(int id);
         IResult UpdateCar(Car car);
@@ -22,7 +20,20 @@ namespace Business.Abstract
         /// </summary>
         /// <returns></returns>
         IDataResult<IList<CarDetailDto>> GetCarDetailDtos();
-        
+
+        /// <summary>
+        /// Aynı renge sahip arabaları dönrürür.
+        /// </summary>
+        /// <returns></returns>
+        IDataResult<IList<CarDetailDto>> GetCarsByColorId(int colorId);
+
+        /// <summary>
+        /// Aynı markaya sahip aracları getitit.
+        /// </summary>
+        /// <param name="brandId"></param>
+        /// <returns></returns>
+        IDataResult<IList<CarDetailDto>> GetCarsByBrandId(int brandId);
+
         /// <summary>
         /// Trasection örneği oluşturmak için kullanılan metot. 
         /// </summary>

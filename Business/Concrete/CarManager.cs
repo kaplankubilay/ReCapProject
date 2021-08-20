@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using Business.Abstract;
 using Business.BusinessAspect.AutoFac;
@@ -34,16 +35,16 @@ namespace Business.Concrete
             return new SuccessDataResult<IList<Car>>(_carDal.GetAll());
         }
 
-        public IDataResult<IList<Car>> GetCarsByBrandId(int id)
+        public IDataResult<IList<CarDetailDto>> GetCarsByBrandId(int brandId)
         {
-            IList<Car> getCars = _carDal.GetAll(b => b.BrandId == id).ToList();
-            return new SuccessDataResult<IList<Car>>(getCars);
+            IList<CarDetailDto> getCars = _carDal.GetCarDetailDtos().Where(x=>x.BrandId==brandId).ToList();
+            return new SuccessDataResult<IList<CarDetailDto>>(getCars);
         }
 
-        public IDataResult<IList<Car>> GetCarsByColorId(int id)
+        public IDataResult<IList<CarDetailDto>> GetCarsByColorId(int colorId)
         {
-            IList<Car> getCars= _carDal.GetAll(c => c.ColorId == id).ToList();
-            return new SuccessDataResult<IList<Car>>(getCars);
+            IList<CarDetailDto> getCars = _carDal.GetCarDetailDtos().Where(x=>x.ColorId==colorId).ToList();
+            return new SuccessDataResult<IList<CarDetailDto>>(getCars);
         }
 
         [SecuredOperation("add.car,admin")]

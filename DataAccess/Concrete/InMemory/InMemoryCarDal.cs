@@ -69,5 +69,10 @@ namespace DataAccess.Concrete
         {
             throw new NotImplementedException();
         }
+
+        public IList<CarDetailDto> GetCarsByColorId(int color)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
