@@ -31,7 +31,10 @@ namespace DataAccess.Concrete.EntityFramework
                         Description = car.Description,
                         FuelName = fuel.Name,
                         ModelYear = car.ModelYear,
-                        Plate = car.Plate
+                        Plate = car.Plate,
+                        ImagePaths = (from image in context.CarImages
+                                      where (car.Id == image.CarId)
+                                      select image.ImagePath.Replace("C:\\Users\\Kubilay\\source\\repos\\CarRental\\CarRentalApi\\WebAPI\\wwwroot", "")).ToArray()
                     };
                 return result.ToList();
             }

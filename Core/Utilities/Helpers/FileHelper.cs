@@ -9,55 +9,52 @@ namespace Core.Utilities.Helpers
 {
     public class FileHelper
     {
-        public static string directory = Environment.CurrentDirectory + @"\wwwroot";
-        public static string path = @"/Images/";
+        public static string oldPath = "C:\\Users\\Kubilay\\source\\repos\\CarRental\\CarRentalApi\\WebAPI\\wwwroot";
 
-        public static string Add(IFormFile file)
+        public static string Add(IFormFile formFile)
         {
-            var sourcepath = Path.GetTempFileName();
-            if (file.Length > 0)
+            var sourcePath = Path.GetTempFileName();
+            using (var stream = new FileStream(sourcePath, FileMode.Create))
             {
-                using (var stream = new FileStream(sourcepath, FileMode.Create))
-                {
-                    file.CopyTo(stream);
-                }
+                formFile.CopyTo(stream);
             }
-            var extension = Path.GetExtension(file.FileName);
-            var newFileName = Guid.NewGuid().ToString("N") + extension;
 
-            File.Move(sourcepath, directory + path + newFileName);
-            return (path + newFileName).Replace("\\", " / ");
+            var result = NewPath(formFile);
+            File.Move(sourcePath, result);
+            return result.Replace(oldPath, "");
+
         }
 
-        public static string Update(string sourcePath, IFormFile file)
+        public static string Update(string sourcePath, IFormFile formFile)
         {
-            var extension = Path.GetExtension(file.FileName);
-            var newFileName = Guid.NewGuid().ToString("N") + extension;
-
-            if (sourcePath.Length > 0)
+            var path = NewPath(formFile);
+            using (var stream = new FileStream(path, FileMode.Create))
             {
-                using (var stream = new FileStream(directory + path + newFileName, FileMode.Create))
-                {
-                    file.CopyTo(stream);
-                }
+                formFile.CopyTo(stream);
+                stream.Flush();
             }
-            File.Delete(directory + sourcePath);
-            return (path + newFileName).Replace("\\", "/");
+            File.Delete(sourcePath);
+            return path.Replace(oldPath, "");
+
         }
 
-        public static IResult Delete(string oldPath)
+        public static void Delete(string path)
         {
-            path = (directory + oldPath).Replace("/", "\\");
-            try
-            {
-                File.Delete(path);
-            }
-            catch (Exception exception)
-            {
-                return new ErrorResult(exception.Message);
-            }
+            File.Delete(path);
+        }
 
-            return new SuccessResult();
+
+        public static string NewPath(IFormFile formFile)
+        {
+            FileInfo fileInfo = new FileInfo(formFile.FileName);
+            string fileExtension = fileInfo.Extension;
+
+            string path = Environment.CurrentDirectory + "\\wwwroot" + "\\images";
+
+            var newPath = Guid.NewGuid().ToString() + fileExtension;
+
+            string result = $@"{ path}\{newPath}";
+            return result;
         }
     }
 }

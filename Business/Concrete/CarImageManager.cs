@@ -25,6 +25,13 @@ namespace Business.Concrete
         }
 
         [CacheAspect]
+        public IDataResult<CarImage> GetImage(int imageId)
+        {
+            var result = _carImageDal.Get(x => x.Id == imageId);
+            return new SuccessDataResult<CarImage>(result);
+        }
+
+        [CacheAspect]
         public IDataResult<IList<CarImage>> GetAllCarImages()
         {
             try
@@ -40,15 +47,15 @@ namespace Business.Concrete
         }
 
         [CacheAspect]
-        public IDataResult<CarImage> GetByCarId(int carId)
+        public IDataResult<IList<CarImage>> GetImagesByCarId(int carId)
         {
             try
             {
                 CarImage car = _carImageDal.Get(x => x.CarId == carId);
 
-                CarImage imageResult = CarImageNullControl(car);
+                IList<CarImage> imageResult = CarImageNullControl(car);
 
-                return new SuccessDataResult<CarImage>(imageResult);
+                return new SuccessDataResult<IList<CarImage>>(imageResult);
             }
             catch (Exception exception)
             {
@@ -61,7 +68,7 @@ namespace Business.Concrete
         {
             try
             {
-                IResult result = BusinessMotor.Run(ImageCountControl(carImage));
+                IResult result = BusinessMotor.Run(ImageCountControl(carImage),CheckFileType(file));
 
                 if (result != null)
                 {
@@ -84,7 +91,7 @@ namespace Business.Concrete
         {
             try
             {
-                IResult result = BusinessMotor.Run(ImageCountControl(carImage));
+                IResult result = BusinessMotor.Run(CheckFileType(file),CheckImagePath(carImage));
 
                 if (result != null)
                 {
@@ -92,6 +99,7 @@ namespace Business.Concrete
                 }
 
                 carImage.ImagePath = FileHelper.Update(_carImageDal.Get(c => c.Id == carImage.Id).ImagePath, file);
+                carImage.Date=DateTime.Now;
                 _carImageDal.Update(carImage);
                 return new Result(true, Messages.Success);
             }
@@ -106,6 +114,13 @@ namespace Business.Concrete
         {
             try
             {
+                IResult result = BusinessMotor.Run(CheckImagePath(carImage));
+
+                if (result != null)
+                {
+                    return result;
+                }
+
                 CarImage getImage = _carImageDal.Get(x => x.Id == carImage.Id);
                 FileHelper.Delete(getImage.ImagePath);
                 _carImageDal.Delete(getImage);
@@ -127,7 +142,7 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
-        private CarImage CarImageNullControl(CarImage carImage)
+        private IList<CarImage> CarImageNullControl(CarImage carImage)
         {
             try
             {
@@ -137,17 +152,57 @@ namespace Business.Concrete
                     {
                         Id = carImage.Id,
                         CarId = carImage.CarId,
-                        ImagePath = Environment.CurrentDirectory + @"\Images\DefaultImage.png",
+                        ImagePath = Environment.CurrentDirectory + @"\wwwroot\images\defaultPhoto.jpg",
                         Date = DateTime.Now
                     };
+
+                    return (IList<CarImage>)carImage;
                 }
-                
-                return carImage;
+                else
+                {
+                    IList<CarImage> carImages = _carImageDal.GetAll(x => x.CarId == carImage.CarId);
+                    return carImages;
+                }
             }
             catch (Exception exception)
             {
                 throw new Exception(Messages.Error, exception);
             }
+        }
+
+        /// <summary>
+        /// resim uzantisi kontrol.
+        /// </summary>
+        /// <param name="formFile"></param>
+        /// <returns></returns>
+        private IResult CheckFileType(IFormFile formFile)
+        {
+            string[] types = new string[] { ".jpg", ".jpeg", ".png", ".jfif" };
+            string fileType = formFile.FileName.ToString().ToLower();
+            foreach (var type in types)
+            {
+                if (fileType.Contains(type))
+                {
+                    return new SuccessResult();
+                }
+            }
+
+            return new ErrorResult(Messages.ImageTypeError);
+        }
+
+        /// <summary>
+        /// resim adresi ve araba kontrolu yapılır.
+        /// </summary>
+        /// <param name="carImage"></param>
+        /// <returns></returns>
+        private IResult CheckImagePath(CarImage carImage)
+        {
+            var result = _carImageDal.Get(x => x.ImagePath == carImage.ImagePath && carImage.CarId == carImage.CarId);
+            if (result == null)
+            {
+                return new ErrorResult(Messages.CheckImagePathOrCar);
+            }
+            return new SuccessResult();
         }
     }
 }

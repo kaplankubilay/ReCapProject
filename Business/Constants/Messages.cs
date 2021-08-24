@@ -40,5 +40,8 @@ namespace Business.Constants
         public static string SuccessfulLogin = "Giriş başarılı.";
         public static string UserAlreadyExists = "Kullanıcı zaten var";
         public static string AccessTokenCreated = "Token oluşturuldu.";
+
+        public static string ImageTypeError = "Resim uzantısı uyumsuz!(.jpg, .jpeg, .png, .jfif olmalı.)";
+        public static string CheckImagePathOrCar = "Resim Path i ya da araba hatalı..";
     }
 }
