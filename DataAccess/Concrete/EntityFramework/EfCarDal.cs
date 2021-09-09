@@ -27,11 +27,13 @@ namespace DataAccess.Concrete.EntityFramework
                         BrandId = brand.Id,
                         ColorId = color.Id,
                         BrandName = brand.Name,
+                        ModelName = brand.ModelName,
                         ColorName = color.Name,
                         Description = car.Description,
                         FuelName = fuel.Name,
                         ModelYear = car.ModelYear,
                         Plate = car.Plate,
+                        DailyPrice = car.DailyPrice,
                         ImagePaths = (from image in context.CarImages
                                       where (car.Id == image.CarId)
                                       select image.ImagePath.Replace("C:\\Users\\Kubilay\\source\\repos\\CarRental\\CarRentalApi\\WebAPI\\wwwroot", "")).ToArray()
