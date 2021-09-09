@@ -122,6 +122,13 @@ namespace Business.Concrete
             return new SuccessDataResult<IList<CarDetailDto>>(_carDal.GetCarDetailDtos()); 
         }
 
+        [CacheAspect]
+        public IDataResult<IList<CarDetailDto>> GetCarDetailsDtoByCarId(int carId)
+        {
+            IList<CarDetailDto> getDetail = _carDal.GetCarDetailDtos().Where(x => x.CarId == carId).ToList();
+            return new SuccessDataResult<IList<CarDetailDto>>(getDetail);
+        }
+
         [TransactionScopeAspect]
         public IResult AddTransactionalTest(Car car)
         {

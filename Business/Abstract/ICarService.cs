@@ -22,6 +22,12 @@ namespace Business.Abstract
         IDataResult<IList<CarDetailDto>> GetCarDetailDtos();
 
         /// <summary>
+        /// Car detail dto nesnesi.
+        /// </summary>
+        /// <returns></returns>
+        IDataResult<IList<CarDetailDto>> GetCarDetailsDtoByCarId(int carId);
+
+        /// <summary>
         /// Aynı renge sahip arabaları dönrürür.
         /// </summary>
         /// <returns></returns>

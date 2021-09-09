@@ -19,9 +19,11 @@ namespace Business.Concrete
     public class CarImageManager : ICarImageService
     {
         private ICarImageDal _carImageDal;
-        public CarImageManager(ICarImageDal carImageDal)
+        private ICarService _carService;
+        public CarImageManager(ICarImageDal carImageDal, ICarService carService)
         {
             _carImageDal = carImageDal;
+            _carService = carService;
         }
 
         [CacheAspect]
@@ -51,9 +53,9 @@ namespace Business.Concrete
         {
             try
             {
-                CarImage car = _carImageDal.Get(x => x.CarId == carId);
+                Car carFind = _carService.GetByIdCar(carId).Data;
 
-                IList<CarImage> imageResult = CarImageNullControl(car);
+                IList<CarImage> imageResult = CarImageNullControl(carFind);
 
                 return new SuccessDataResult<IList<CarImage>>(imageResult);
             }
@@ -68,7 +70,7 @@ namespace Business.Concrete
         {
             try
             {
-                IResult result = BusinessMotor.Run(ImageCountControl(carImage),CheckFileType(file));
+                IResult result = BusinessMotor.Run(ImageCountControl(carImage), CheckFileType(file));
 
                 if (result != null)
                 {
@@ -87,11 +89,11 @@ namespace Business.Concrete
         }
 
         [CacheRemoveAspect("ICarImageService.Get")]
-        public IResult UpdateCarImage(IFormFile file,CarImage carImage)
+        public IResult UpdateCarImage(IFormFile file, CarImage carImage)
         {
             try
             {
-                IResult result = BusinessMotor.Run(CheckFileType(file),CheckImagePath(carImage));
+                IResult result = BusinessMotor.Run(CheckFileType(file), CheckImagePath(carImage));
 
                 if (result != null)
                 {
@@ -99,7 +101,7 @@ namespace Business.Concrete
                 }
 
                 carImage.ImagePath = FileHelper.Update(_carImageDal.Get(c => c.Id == carImage.Id).ImagePath, file);
-                carImage.Date=DateTime.Now;
+                carImage.Date = DateTime.Now;
                 _carImageDal.Update(carImage);
                 return new Result(true, Messages.Success);
             }
@@ -142,25 +144,25 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
-        private IList<CarImage> CarImageNullControl(CarImage carImage)
+        private IList<CarImage> CarImageNullControl(Car carFind)
         {
             try
             {
-                if (carImage.ImagePath == null)
+                string path = @"\images\defaultPhoto.jpg";
+                
+                var result = _carImageDal.GetAll(c => c.CarId == carFind.Id).Any();
+                
+                if (!result)
                 {
-                    carImage = new CarImage
-                    {
-                        Id = carImage.Id,
-                        CarId = carImage.CarId,
-                        ImagePath = Environment.CurrentDirectory + @"\wwwroot\images\defaultPhoto.jpg",
-                        Date = DateTime.Now
+                    List<CarImage> carImage = new List<CarImage>() {
+                        new CarImage { CarId = carFind.Id, ImagePath = path, Date = DateTime.Now }
                     };
 
-                    return (IList<CarImage>)carImage;
+                    return carImage;
                 }
                 else
                 {
-                    IList<CarImage> carImages = _carImageDal.GetAll(x => x.CarId == carImage.CarId);
+                    List<CarImage> carImages = _carImageDal.GetAll(x => x.CarId == carFind.Id).ToList();
                     return carImages;
                 }
             }
@@ -169,6 +171,37 @@ namespace Business.Concrete
                 throw new Exception(Messages.Error, exception);
             }
         }
+
+        //private IList<CarImage> CarImageNullControl(Car carFind)
+        //{
+        //    try
+        //    {
+        //        CarImage findImage = _carImageDal.Get(x => x.CarId == carFind.Id);
+        //        if (findImage == null)
+        //        {
+        //            List<CarImage> defaultImage = new List<CarImage>()
+        //            {
+        //                new CarImage
+        //                {
+        //                    CarId = carFind.Id,
+        //                    Date = DateTime.Now,
+        //                    ImagePath = Environment.CurrentDirectory + @"\wwwroot\images\defaultPhoto.jpg"
+        //                }
+        //            };
+
+        //            return defaultImage;
+        //        }
+        //        else
+        //        {
+        //            List<CarImage> carImages = _carImageDal.GetAll(x => x.CarId == carFind.Id).ToList();
+        //            return carImages;
+        //        }
+        //    }
+        //    catch (Exception exception)
+        //    {
+        //        throw new Exception(Messages.Error, exception);
+        //    }
+        //}
 
         /// <summary>
         /// resim uzantisi kontrol.
