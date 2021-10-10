@@ -70,7 +70,7 @@ namespace Business.Concrete
         {
             try
             {
-                var result = BusinessMotor.Run(AddRentalControl(rental));
+                var result = BusinessMotor.Run(AddRentalControl(rental), RentalAvailableControl(rental));
                 if (result != null)
                 {
                     return result;
@@ -127,6 +127,27 @@ namespace Business.Concrete
                 }
             }
 
+            return new SuccessResult();
+        }
+
+        /// <summary>
+        /// Seçilen tarihler arasında araç müsaitlik durumunu kontrol eden metot.
+        /// </summary>
+        /// <param name="rental"></param>
+        /// <returns></returns>
+        public IResult RentalAvailableControl(Rental rental)
+        {
+            IList<Rental> getRentals = _rentalDal.GetAll(x => x.CarId == rental.CarId);
+
+            foreach (var findRental in getRentals)
+            {
+                if ((rental.RentDate < findRental.RentDate && rental.ReturnDate > findRental.ReturnDate) || 
+                    (rental.ReturnDate> findRental.RentDate && rental.ReturnDate < findRental.ReturnDate) ||
+                    (rental.RentDate> findRental.RentDate && rental.RentDate < findRental.ReturnDate))
+                {
+                    return  new ErrorResult(Messages.CarAlreadyReserved);
+                }
+            }
             return new SuccessResult();
         }
     }
