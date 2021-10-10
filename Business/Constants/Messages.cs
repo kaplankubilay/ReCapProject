@@ -43,5 +43,8 @@ namespace Business.Constants
 
         public static string ImageTypeError = "Resim uzantısı uyumsuz!(.jpg, .jpeg, .png, .jfif olmalı.)";
         public static string CheckImagePathOrCar = "Resim Path i ya da araba hatalı..";
+
+        public static string AlreadyCartExist = "Bu kart numarasi zaten tanimli.";
+        public static string CarAlreadyReserved = "Seçilen tarih arasinda araç uygun değil.";
     }
 }
