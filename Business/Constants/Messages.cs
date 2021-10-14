@@ -46,5 +46,7 @@ namespace Business.Constants
 
         public static string AlreadyCartExist = "Bu kart numarasi zaten tanimli.";
         public static string CarAlreadyReserved = "Seçilen tarih arasinda araç uygun değil.";
+
+        public static string SelectDateError = "Kiralama tarihi,dönüş tarihinden büyük olmaz!..";
     }
 }
