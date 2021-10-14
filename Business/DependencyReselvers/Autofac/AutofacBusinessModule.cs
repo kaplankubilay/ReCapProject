@@ -49,7 +49,10 @@ namespace Business.DependencyReselvers.Autofac
 
             builder.RegisterType<BankCartManager>().As<IBankCartService>().SingleInstance();
             builder.RegisterType<EfBankCartDal>().As<IBankCartDal>().SingleInstance();
-            
+
+            builder.RegisterType<PaymentManager>().As<IPaymentService>().SingleInstance();
+            builder.RegisterType<EfPaymentDal>().As<IPaymentDal>().SingleInstance();
+
             builder.RegisterType<UserManager>().As<IUserService>();
             builder.RegisterType<EfUserDal>().As<IUserDal>();
 
